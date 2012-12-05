@@ -1,0 +1,37 @@
+I haven't read this yet on account of the length, but it seems relevant/
+interesting.  The Scientist and Engineer's Guide to Digital Signal Processing
+By Steven W. Smith, Ph.D.  http://www.dspguide.com/pdfbook.htm
+
+I’m pretty sure that this guy doesn’t actually count as an expert, but these
+pages are reasonable and very easy to read (which I can’t necessarily say about
+the "expert's" work)
+
+http://www.silcom.com/~aludwig/contents.htm
+
+Part 1:
+Fourier Transforms and Sampling
+http://www.silcom.com/~aludwig/Signal_processing/Signal_processing.htm
+
+Part 2:
+Digital Filters
+http://www.silcom.com/~aludwig/Signal_processing/Digital_filters.htm
+
+“Data Transmission by Frequency-Division Multiplexing Using the Discrete
+Fourier Transform” from IEEE in 1971.  It talks about a digital implementation
+of the FFT, but I can’t pretend that I have read over it enough times to have
+any idea how to implement what they are talking about.
+(in weinstein1971.pdf)
+
+note for me: convolution in frequency domain = multiplication in time domain
+
+Implementation: Shifting center frequency = rotating the vector (v = a + ib)
+that you get from converting the signal to a set of complex vectors in the
+frequency domain.  Which maybe should have seemed obvious. Certainly wasn’t
+obvious to me.  Thanks stackoverflow.
+http://stackoverflow.com/questions/11794654/frequency-shift-using-fft-in-matlab
+
+"Real-Time Pitch Shifting on an FPGA" by some ECE seniors at Villanova
+University in 2006 The report focuses on hardware implementation, but is a
+great overview of concepts and he includes DSP (digital signal processing)
+code/ demonstrations.
+http://www56.homepage.villanova.edu/scott.sawyer/fpga/index.htm
