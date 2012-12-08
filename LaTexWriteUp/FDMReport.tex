@@ -71,7 +71,9 @@ Looking at \(c_n\), and replacing \( \frac{-n\pi}{\Omega} = \bar{t}\) yield the 
 
 Therefore, the Fourier transform can be completely determined by taking discrete samples of the function \( f(t) \) at only times t = \( \frac{n\pi}{\Omega}\). Because any function can always be recovered exactly from its Fourier transform, this implies that the band limited function \( f(t) \) can be completely determined by the same discrete set of samples.
 
-Use 
+Use \eqref{eq:nfhat} to reconstruct \( f(t)  \):
+\[ f(t) = \inftyint \frac{1}{2\Omega} \sum_{n = -\infty}^{\infty} f(\frac{n\pi}{\Omega})e^{-i \omega \frac{n \pi}{\Omega} } e^{i\omega t} \,d\omega = \frac{1}{2\Omega} \sum_{n = -\infty}^{\infty} f(\frac{n\pi}{\Omega}) \inftyint e^{-i \omega \frac{n \pi}{\Omega} } e^{i\omega t} \, d\omega\]
+
 
 %
 %\[  \hat{f}(\omega)  =\frac{1}{2\Omega}  \sum_{n = -\infty}^{\infty} f(\frac{n\pi}{\Omega})e^{\frac{-i n \pi \omega}{\Omega}} \]
