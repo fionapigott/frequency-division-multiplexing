@@ -1,0 +1,114 @@
+% Nicholas Vanderweit
+% Fiona Pigott
+% Krishan Patel
+
+% Fourier final project--Digital signal processing
+% Dec 7 2012
+
+% Set up the layout
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\geometry{letterpaper}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{verbatim}
+\usepackage{setspace}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{float}
+
+\newcommand{\inftyint}{\int_{-\infty}^{\infty}}
+
+% Title
+\title{Frequency Division Multiplexing \\Using the Fast Fourier Transform }
+\author{Nicholas Vanderweit \\Fiona Pigott \\Krishan Patel}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% Begin  the write-up
+
+% Abstract
+\begin{abstract}
+
+Representing real signals, then transmitting them efficiently and accurately is one of the most important processes of the information age. One important method of representing a time- or space- dependent signal in a way that inherently sorts out data in terms of its significance to the actual signal is representing the signal in the frequency domain, then transmitting it that way. A data set for a frequency domain signal can be cut down and insignificant data removed by cutting off the data when the frequency becomes so high as to be imperceptible to humans.
+This paper discusses the Discrete Fourier Transform and the algorithmically advantageous version the Fast Fourier Transform and their use in transforming discrete sampled signals into the frequency domain and processing those signals (shifting frequency, limiting bandwidth etc). We discuss the mathematical and practical significance of using the FFT in Frequency Division Multiplexing over other, earlier techniques, and demonstrate digitally processing and transmitting a sound signal, similar to how FDM is used to transmit telephone conversations.
+
+\end{abstract}
+
+\clearpage
+
+\section{Mathematical Formulation \\of Digital Signal Processing}
+
+\subsection{Nyquist-Shannon Sampling Theorem}
+
+One of the most important results in signal processing, the Nyquist-Shannon Sampling Theorem (often simply the Nyquist Sampling Theorem) helps to develop the Discrete Fourier Transform. The result of this theorem is that for any 
+
+\subsubsection{Proof}
+
+Say the \(f(t)\) is some infinite function in the time domain, but note that this proof holds as well for a spacial \(f(x)\).
+
+A signal \(f(t)\) is called \emph{band limited} if its Fourier transform is identically zero except in a finite interval.
+\[\hat{f}(\omega) = 0 \quad \forall \, \omega \; \text{where} \; |\omega| > \Omega\]
+i.e., the signal is composed of a limited number of frequencies. Practically, most signals that are not completely random are band limited.
+
+If f(t) is band limited:
+\[f(t) = \inftyint \hat{f}(\omega)e^{i\omega t} \,d\omega \; = \; \int_{-\Omega}^{\Omega} \hat{f}(\omega)e^{i\omega t} \,d\omega\]
+
+Now, since \( \hat{f}(\omega) \) is defined on a finite, rather than an infinite, interval, \( \hat{f}(\omega) \) can be expressed as as a summation rather than an integral:
+\[\hat{f}(\omega) = \sum_{n = -\infty}^{\infty} c_{n}e^{\frac{i n \pi \omega}{\Omega}} \]
+Where the complex coefficients \( c_n\) are the Fourier transform of \( \hat{f}(\omega) \):
+\[ c_n = \frac{1}{2\Omega} \int_{-\Omega}^{\Omega} \hat{f}(\bar{\omega})e^{\frac{-i n \pi \bar{ \omega}}{\Omega}}\,d\bar{\omega}\]
+
+Looking at \(c_n\), and replacing \( \frac{-n\pi}{\Omega} = \bar{t}\) yield the definition of the Fourier transform of \( f(\bar{t}\):
+\[ c_n = \frac{1}{2\Omega} \int_{-\Omega}^{\Omega} \hat{f}(\bar{\omega})e^{i\bar{\omega}\bar{t}}\,d\bar{\omega} = \frac{1}{2\Omega} f(\bar{t}) = \frac{1}{2\Omega} f(\frac{-n\pi}{\Omega})\]
+
+\begin{equation}
+\label{eq:nfhat}
+\therefore \; \hat{f}(\omega) = \sum_{n = -\infty}^{\infty} c_{n}e^{\frac{i n \pi \omega}{\Omega}} = \sum_{n = -\infty}^{\infty} \frac{1}{2\Omega} f(\frac{-n\pi}{\Omega})e^{\frac{i n \pi \omega}{\Omega}} = \frac{1}{2\Omega} \sum_{n = -\infty}^{\infty} f(\frac{n\pi}{\Omega})e^{-i \omega \frac{n \pi}{\Omega} } 
+\end{equation}
+
+Therefore, the Fourier transform can be completely determined by taking discrete samples of the function \( f(t) \) at only times t = \( \frac{n\pi}{\Omega}\). Because any function can always be recovered exactly from its Fourier transform, this implies that the band limited function \( f(t) \) can be completely determined by samples at a discrete set of times, t = \( \frac{1}{2\Omega} \) which can be demonstrated with some algebra, below.
+
+\[  \hat{f}(\omega)  =\frac{1}{2\Omega}  \sum_{n = -\infty}^{\infty} f(\frac{n\pi}{\Omega})e^{\frac{-i n \pi \omega}{\Omega}} \]
+
+Note that it is a property of the Fourier transform that:
+\[ \mathcal{F}(g(Ct)) = \frac{1}{C} \; \hat{g}(\frac{\omega}{C}) \]
+
+Which is easily shown. Taking the Fourier Transform of \(g(Ct)\) yields:
+\[ \mathcal{F}(g(Ct)) = \inftyint g(Ct)e^{-i\omega t} \,dt \]
+Performing a simple u-substitution for \(Ct\), \(u = Ct\):
+\[u = Ct  \Rightarrow du = Cdt \Rightarrow \frac{1}{C} \, du = dt \]
+\[ \mathcal{F}(g(u)) = \frac{1}{C}  \inftyint g(u)e^{-i\frac{\omega}{C} u} \,du = \frac{1}{C} \;  \hat{g}(\frac{\omega}{C}) \]
+
+From the property demonstrated above, we can manipulate eq \eqref{eq:nfhat}:
+\[ (2\Omega) \hat{f}(\omega) =  \sum_{n = -\infty}^{\infty} f(\frac{n\pi}{\Omega})e^{-i \omega \frac{n \pi}{\Omega} } \]
+
+
+
+\subsection{Discrete Fourier Transform}
+
+\subsection{Fast Fourier Transform}
+
+%reality condition and its implications
+
+\section{Frequency Division Multiplexing}
+
+\subsection{A Brief History}
+
+non-FFT implementations, their drawbacks, FFT implementations, their advantages, practical examples.
+
+\subsection{Our implementation}
+
+\section{Extension of Principles}
+
+\section{Conclusions}
+
+\end{document}
+
+
+
+
+
+
