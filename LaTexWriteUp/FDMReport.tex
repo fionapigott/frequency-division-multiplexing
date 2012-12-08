@@ -61,7 +61,7 @@ Now, since \( \hat{f}(\omega) \) is defined on a finite, rather than an infinite
 Where the complex coefficients \( c_n\) are the Fourier transform of \( \hat{f}(\omega) \):
 \[ c_n = \frac{1}{2\Omega} \int_{-\Omega}^{\Omega} \hat{f}(\bar{\omega})e^{\frac{-i n \pi \bar{ \omega}}{\Omega}}\,d\bar{\omega}\]
 
-Looking at \(c_n\), and replacing \( \frac{-n\pi}{\Omega} = \bar{t}\) yield the definition of the Fourier transform of \( f(\bar{t}\):
+Looking at \(c_n\), and replacing \( \frac{-n\pi}{\Omega} = \bar{t}\) yield the definition of the Fourier transform of \( f(\bar{t})\):
 \[ c_n = \frac{1}{2\Omega} \int_{-\Omega}^{\Omega} \hat{f}(\bar{\omega})e^{i\bar{\omega}\bar{t}}\,d\bar{\omega} = \frac{1}{2\Omega} f(\bar{t}) = \frac{1}{2\Omega} f(\frac{-n\pi}{\Omega})\]
 
 \begin{equation}
@@ -69,23 +69,26 @@ Looking at \(c_n\), and replacing \( \frac{-n\pi}{\Omega} = \bar{t}\) yield the 
 \therefore \; \hat{f}(\omega) = \sum_{n = -\infty}^{\infty} c_{n}e^{\frac{i n \pi \omega}{\Omega}} = \sum_{n = -\infty}^{\infty} \frac{1}{2\Omega} f(\frac{-n\pi}{\Omega})e^{\frac{i n \pi \omega}{\Omega}} = \frac{1}{2\Omega} \sum_{n = -\infty}^{\infty} f(\frac{n\pi}{\Omega})e^{-i \omega \frac{n \pi}{\Omega} } 
 \end{equation}
 
-Therefore, the Fourier transform can be completely determined by taking discrete samples of the function \( f(t) \) at only times t = \( \frac{n\pi}{\Omega}\). Because any function can always be recovered exactly from its Fourier transform, this implies that the band limited function \( f(t) \) can be completely determined by samples at a discrete set of times, t = \( \frac{1}{2\Omega} \) which can be demonstrated with some algebra, below.
+Therefore, the Fourier transform can be completely determined by taking discrete samples of the function \( f(t) \) at only times t = \( \frac{n\pi}{\Omega}\). Because any function can always be recovered exactly from its Fourier transform, this implies that the band limited function \( f(t) \) can be completely determined by the same discrete set of samples.
 
-\[  \hat{f}(\omega)  =\frac{1}{2\Omega}  \sum_{n = -\infty}^{\infty} f(\frac{n\pi}{\Omega})e^{\frac{-i n \pi \omega}{\Omega}} \]
+Use 
 
-Note that it is a property of the Fourier transform that:
-\[ \mathcal{F}(g(Ct)) = \frac{1}{C} \; \hat{g}(\frac{\omega}{C}) \]
+%
+%\[  \hat{f}(\omega)  =\frac{1}{2\Omega}  \sum_{n = -\infty}^{\infty} f(\frac{n\pi}{\Omega})e^{\frac{-i n \pi \omega}{\Omega}} \]
+%
+%Note that it is a property of the Fourier transform that:
+%\[ \mathcal{F}(g(Ct)) = \frac{1}{C} \; \hat{g}(\frac{\omega}{C}) \]
+%
+%Which is easily shown. Taking the Fourier Transform of \(g(Ct)\) yields:
+%\[ \mathcal{F}(g(Ct)) = \inftyint g(Ct)e^{-i\omega t} \,dt \]
+%Performing a simple u-substitution for \(Ct\), \(u = Ct\):
+%\[u = Ct  \Rightarrow du = Cdt \Rightarrow \frac{1}{C} \, du = dt \]
+%\[ \mathcal{F}(g(u)) = \frac{1}{C}  \inftyint g(u)e^{-i\frac{\omega}{C} u} \,du = \frac{1}{C} \;  \hat{g}(\frac{\omega}{C}) \]
+%
+%From the property demonstrated above, we can manipulate eq \eqref{eq:nfhat}:
+%\[ (2\Omega) \hat{f}(\omega) =  \sum_{n = -\infty}^{\infty} f(\frac{n\pi}{\Omega})e^{-i \omega \frac{n \pi}{\Omega} } \]
 
-Which is easily shown. Taking the Fourier Transform of \(g(Ct)\) yields:
-\[ \mathcal{F}(g(Ct)) = \inftyint g(Ct)e^{-i\omega t} \,dt \]
-Performing a simple u-substitution for \(Ct\), \(u = Ct\):
-\[u = Ct  \Rightarrow du = Cdt \Rightarrow \frac{1}{C} \, du = dt \]
-\[ \mathcal{F}(g(u)) = \frac{1}{C}  \inftyint g(u)e^{-i\frac{\omega}{C} u} \,du = \frac{1}{C} \;  \hat{g}(\frac{\omega}{C}) \]
-
-From the property demonstrated above, we can manipulate eq \eqref{eq:nfhat}:
-\[ (2\Omega) \hat{f}(\omega) =  \sum_{n = -\infty}^{\infty} f(\frac{n\pi}{\Omega})e^{-i \omega \frac{n \pi}{\Omega} } \]
-
-
+\subsubsection{Implications}
 
 \subsection{Discrete Fourier Transform}
 
