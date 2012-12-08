@@ -107,24 +107,34 @@ In practice, many signals are only \emph{very nearly} band limited, meaning that
 
 Given the Nyquist-Shannon Sampling Theorem, the Discrete Fourier transform follows readily.
 
-From equation \eqref{eq:nfhat}:
+From equation \eqref{eq:nfhat} (the discrete time Fourier transform of \(f(t)\)):
 \[
 \hat{f}(\omega) = \frac{1}{2\Omega} \sum_{n = -\infty}^{\infty} f(\frac{n\pi}{\Omega})e^{-i \omega \frac{n \pi}{\Omega} } 
 \]
 
-\subsection{Fast Fourier Transform}
+%I feel like I grasp this somewhat, but I can't develop it in a way that I'm satisfied with. 
 
+\subsubsection{Properties of the Discrete Fourier Transform}
 %reality condition and its implications
+%symmetries
+
+\subsection{Fast Fourier Transform}
+% I think we should mention the FFT, but not go into detail. It's a bit beyond the scope of the project.
 
 \section{Frequency Division Multiplexing}
 
-\subsection{A Brief History}
+\subsection{Overview}
 
-non-FFT implementations, their drawbacks, FFT implementations, their advantages, practical examples.
+Frequency division multiplexing is a method 
+%non-FFT implementations, their drawbacks, FFT implementations, their advantages, practical examples.
 
 \subsection{Our implementation}
 
+%modulating, combining, then separating out the signals.
+
 \section{Extension of Principles}
+
+%File compression by limiting bandwidth, image compression (same thing but in spacial domain), modulating signals in general
 
 \section{Conclusions}
 
