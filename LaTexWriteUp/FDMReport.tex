@@ -50,7 +50,7 @@ One of the most important results in signal processing, the Nyquist-Shannon Samp
 Say the \(f(t)\) is some infinite function in the time domain, but note that this proof holds as well for a spacial \(f(x)\).
 
 A signal \(f(t)\) is called \emph{band limited} if its Fourier transform is identically zero except in a finite interval.
-\[\hat{f}(\omega) = 0 \quad \forall \, \omega \; \text{where} \; |\omega| > \Omega\]
+\[\hat{f}(\omega) = 0 \quad \forall \, \omega \; \text{where} \; |\omega| > \Omega \text{ ``cutoff frequency"}\]
 i.e., the signal is composed of a limited number of frequencies. Practically, most signals that are not completely random are band limited.
 
 If f(t) is band limited:
@@ -72,10 +72,17 @@ Looking at \(c_n\), and replacing \( \frac{-n\pi}{\Omega} = \bar{t}\) yield the 
 Therefore, the Fourier transform can be completely determined by taking discrete samples of the function \( f(t) \) at only times t = \( \frac{n\pi}{\Omega}\). Because any function can always be recovered exactly from its Fourier transform, this implies that the band limited function \( f(t) \) can be completely determined by the same discrete set of samples.
 
 Use \eqref{eq:nfhat} to reconstruct \( f(t)  \):
-\[ f(t) = \inftyint \frac{1}{2\Omega} \sum_{n = -\infty}^{\infty} f(\frac{n\pi}{\Omega})e^{-i \omega \frac{n \pi}{\Omega} } e^{i\omega t} \,d\omega = \frac{1}{2\Omega} \sum_{n = -\infty}^{\infty} f(\frac{n\pi}{\Omega}) \inftyint e^{-i \omega \frac{n \pi}{\Omega} } e^{i\omega t} \, d\omega\]
+\begin{equation}
+\label{eq:nft}
+f(t) = \inftyint \frac{1}{2\Omega} \sum_{n = -\infty}^{\infty} f(\frac{n\pi}{\Omega})e^{-i \omega \frac{n \pi}{\Omega} } e^{i\omega t} \,d\omega = \frac{1}{2\Omega} \sum_{n = -\infty}^{\infty} f(\frac{n\pi}{\Omega}) \inftyint e^{-i \omega \frac{n \pi}{\Omega} } e^{i\omega t} \, d\omega
+\end{equation}
 
+And since the Fourier transform \( \hat{f}(\omega) \) is periodic with a period of \( 2\pi\), the sampling frequency \( n\) is given by:
+\[ \frac{n\pi}{\Omega} = 2\pi \Rightarrow n = 2\Omega\]
 
-%
+Thus, the result of the Nyquist-Shannon sampling theorem: any bandwidth limited function with the cutoff frequency \( \Omega \) in the time (or spacial) domain can be reconstructed exactly from samples taken at a rate of \( 2\Omega \).
+
+% This was totally unnecessary to this proof (oops), but I'm going to hang on to it for now.
 %\[  \hat{f}(\omega)  =\frac{1}{2\Omega}  \sum_{n = -\infty}^{\infty} f(\frac{n\pi}{\Omega})e^{\frac{-i n \pi \omega}{\Omega}} \]
 %
 %Note that it is a property of the Fourier transform that:
@@ -86,13 +93,24 @@ Use \eqref{eq:nfhat} to reconstruct \( f(t)  \):
 %Performing a simple u-substitution for \(Ct\), \(u = Ct\):
 %\[u = Ct  \Rightarrow du = Cdt \Rightarrow \frac{1}{C} \, du = dt \]
 %\[ \mathcal{F}(g(u)) = \frac{1}{C}  \inftyint g(u)e^{-i\frac{\omega}{C} u} \,du = \frac{1}{C} \;  \hat{g}(\frac{\omega}{C}) \]
-%
-%From the property demonstrated above, we can manipulate eq \eqref{eq:nfhat}:
-%\[ (2\Omega) \hat{f}(\omega) =  \sum_{n = -\infty}^{\infty} f(\frac{n\pi}{\Omega})e^{-i \omega \frac{n \pi}{\Omega} } \]
+
 
 \subsubsection{Implications}
 
+The Nyquist-Shannon sampling theorem is important because it demonstrates how to use digital processing (which is necessarily discrete) to analyze signals. 
+
+In practice, many signals are only \emph{very nearly} band limited, meaning that the vast majority of frequencies are under a certain \( \Omega \), but some almost random noise causes some small frequency components \( \omega \) with \( |\omega| > \Omega \). The signal might also be artificially band limited because the sampling frequency \( f_s\) is determined by factors other than the signal's band (such as limited storage), and so the frequencies \( \omega \) in the signal are represented faithfully only for \(|\omega| < \frac{f_s}{2} \). Because samples at \( f_s > 2\Omega \) only correspond to unique periodic components with frequency \( < \frac{f_s}{2} \), samples from components with frequency \( > \frac{f_s}{2} \) are aliased to a frequency components with the same sample with frequency \( < \frac{f_s}{2} \). In both cases, this aliasing results in noise and distortion of the sound; aliasing is avoided only by understanding the frequency components of the time dependent signal. When small sampling frequency cannot be avoided, the added noise from aliasing can be eliminated by artificially bandwidth limiting the signal--taking the Fourier transform and setting it equal to zero outside of some band \( |\omega| > \frac{f_s}{2}  \). This way, information is lost, but the remaining signal is clearer. 
+
+% I think some illustration of what aliasing means here (i.e. 2 sine waves with the same sample) would be helpful. Remind me to look/ create one.
+
 \subsection{Discrete Fourier Transform}
+
+Given the Nyquist-Shannon Sampling Theorem, the Discrete Fourier transform follows readily.
+
+From equation \eqref{eq:nfhat}:
+\[
+\hat{f}(\omega) = \frac{1}{2\Omega} \sum_{n = -\infty}^{\infty} f(\frac{n\pi}{\Omega})e^{-i \omega \frac{n \pi}{\Omega} } 
+\]
 
 \subsection{Fast Fourier Transform}
 
