@@ -32,21 +32,19 @@
 % Abstract
 \begin{abstract}
 
-Representing real-valued signals and transmitting them efficiently without 
-loss of accuracy is a key process of the information age. One important method 
-of representing a time- (or space-) dependent signal which inherently sorts 
-out the significant data is by representing the signal in the frequency domain 
-and transmitting with that format. The data set for a frequency-domain signal 
-can be cut down by removing insignificant data where the frequency is too high 
-to be perceived by humans. This paper investigates the methods of the Discrete 
-Fourier Transform (DFT) and its algorithmically advantageous brother, the Fast 
-Fourier Transform (FFT), and their use in transforming discrete sampled 
-signals into the frequency domain, where the signal can be more easily analyze.
-Furthermore, we discuss the practical and mathematical significance of using 
-the FFT in Frequency Division Multiplexing (FDM), over other earlier 
-techniques, and demonstrate how to digitally process and transmit a sound 
-signal using this method, similar to the manner in which telephone 
-conversations are transmitted.
+The discrete Fourier transform, or DFT, is undoubtedly one of the most
+important and widely used operators in signal processing. Because it is
+able to represent many common kinds of signals without loss of information, and
+because there are many efficient algorithms (called fast Fourier transforms, or
+FFTs) to implement it on conventional hardware, the DFT has become an
+invaluable tool for analysing and manipulating the frequency information in
+digital signals. In this paper, we will investigate Frequency-Division
+Multiplexing, one such application which focuses on sending several signals
+concurrently in time through a fixed-bandwidth channel, by translating each of
+the constituent frequencies into its own allocation within the channel. In the
+process, we will investigate the relationship between the DFT, the DTFT
+(discrete-time Fourier transform), and the Fourier transform on an infinite
+continuous domain.
 
 
 \end{abstract}
