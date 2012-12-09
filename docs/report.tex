@@ -32,21 +32,22 @@
 % Abstract
 \begin{abstract}
 
-Representing real signals, then transmitting them efficiently and accurately is
-one of the most important processes of the information age. One important
-method of representing a time- or space- dependent signal in a way that
-inherently sorts out data in terms of its significance to the actual signal is
-representing the signal in the frequency domain, then transmitting it that way.
-A data set for a frequency domain signal can be cut down and insignificant data
-removed by cutting off the data when the frequency becomes so high as to be
-imperceptible to humans.  This paper discusses the Discrete Fourier Transform
-and the algorithmically advantageous version the Fast Fourier Transform and
-their use in transforming discrete sampled signals into the frequency domain
-and processing those signals (shifting frequency, limiting bandwidth etc). We
-discuss the mathematical and practical significance of using the FFT in
-Frequency Division Multiplexing over other, earlier techniques, and demonstrate
-digitally processing and transmitting a sound signal, similar to how FDM is
-used to transmit telephone conversations.
+Representing real-valued signals and transmitting them efficiently without 
+loss of accuracy is a key process of the information age. One important method 
+of representing a time- (or space-) dependent signal which inherently sorts 
+out the significant data is by representing the signal in the frequency domain 
+and transmitting with that format. The data set for a frequency-domain signal 
+can be cut down by removing insignificant data where the frequency is too high 
+to be perceived by humans. This paper investigates the methods of the Discrete 
+Fourier Transform (DFT) and its algorithmically advantageous brother, the Fast 
+Fourier Transform (FFT), and their use in transforming discrete sampled 
+signals into the frequency domain, where the signal can be more easily analyze.
+Furthermore, we discuss the practical and mathematical significance of using 
+the FFT in Frequency Division Multiplexing (FDM), over other earlier 
+techniques, and demonstrate how to digitally process and transmit a sound 
+signal using this method, similar to the manner in which telephone 
+conversations are transmitted.
+
 
 \end{abstract}
 
@@ -58,8 +59,9 @@ used to transmit telephone conversations.
 
 One of the most important results in signal processing, the Nyquist-Shannon
 Sampling Theorem (often simply the Nyquist Sampling Theorem) helps to develop
-the Discrete Fourier Transform. The result of this theorem is that and periodic
-signal can be represented by a specific, discrete set of points.
+the Discrete Fourier Transform. The result of this theorem is that any periodic
+signal can be represented by a discretly sampled set of points, with samping 
+frequency greater than the largest frequency present in the signal. 
 
 \subsubsection{Proof}
 
@@ -98,9 +100,10 @@ yield the definition of the Fourier transform of \( f(\bar{t})\): \[ \hat{c}_n
 
 Therefore, the Fourier transform can be completely determined by taking
 discrete samples of the function \( f(t) \) at only times t = \(
-\frac{n\pi}{\Omega}\). Because any function can always be recovered exactly
-from its Fourier transform, this implies that the band limited function \( f(t)
-\) can be completely determined by the same discrete set of samples.
+\frac{n\pi}{\Omega}\). Because any function with a Fourier transform can 
+always be recovered exactly from its Fourier transform, this implies that the 
+band limited function \( f(t)\) can be completely determined by the same 
+discrete set of samples.
 
 Use \eqref{eq:nft} and \eqref{eq:nfhat} to reconstruct \( f(t)  \):
 \begin{equation} \label{eq:ndtft} f(t) = \int_{-\Omega}^{\Omega}
@@ -225,6 +228,7 @@ to be organized in the frequency domain.There are two important properties of
 the discrete Fourier transform that are integral to the digital analysis of
 real signals: one, its periodicity, and two, the reality condition.
 
+\subsubsection*{Periodicity}
 As to the periodicity of the function, we enforced a period of \(T_0\) on the
 discrete Fourier transform in the formulation. This period results directly
 from the sampling frequency \(f_s\) with \(T_0 = \frac{N}{f_s}\) (which is
@@ -233,8 +237,36 @@ voice) to analyze it, we know what the period of the transform and of resulting
 time domain signal should be, and can select only one period to analyze.
 
 An interesting way of showing the periodic properties of the discrete transform
-is to recognize the discrete transform as a special kinda of Dirac delta.
+is to recognize the discrete transform as a special kinda of Dirac delta. 
 
+The Dirac delta is a \emph{sifting function} defined as the derivative of the 
+unit step function. By definition, a sifting function samples some other 
+function \( f(t \) at some arbitrary point \( \tau \). The the inner product 
+of the Dirac delta (defined below) and \( f(t)\) is equal to \( f(\tau) \):
+\[ \inftyint \delta(t - \tau)f(t) \, dt = f(\tau) \]
+With that property, with \(n\) Dirac deltas, \( f (t) \) would be sampled
+\( n\) times with samples spaced \( \tau\) units apart:
+\[ \inftyint \delta(t - n\tau)f(t) \, dt = f(n\tau) \]
+Notice that computing the discrete Fourier transform of a continuous 
+signal is exactly that--taking \( n = \frac{1}{f_s} \) Dirac deltas, computing 
+thier inner products to sample a function \( f(t) \) \(n\) times, then
+taking the transform of those samples. For \( |n| \to \infty \), the 
+combination of all of these Dirac deltas is called and infinite Dirac comb, 
+and the transform of those samples is the transform of the Dirac comb over some
+interval. 
+
+This brings us to note a fundamental property of the Dirac comb, which we will
+use in our analysis: the frequency of samples that make up the comb, 
+\( f_s \), is the inverse frequency of the transform of those samples.
+Another way of stating that property is that for some spacing \( \tau\) 
+between sample points in the time domain, the spacing in the frequency 
+domain is \( \frac{1}{\tau} \). A proof and examples of this can be found in 
+the Allen and Mills, as well as the Edinburgh physics depertment references.
+
+The periodicity of function and transform stated above, which we rely on in 
+our analysis results directly from the above property of the Dirac comb.
+
+\subsubsection*{Reality Condition}
 The second property that we mape use of in manipulating signals, the reality
 condition, holds for all Fourier transforms, and the reality condition states
 that for all Fourier transforms of all real-valued functions: \[\hat{f}(\omega)
@@ -263,8 +295,9 @@ f(t)sin(\omega t) \, dt\] \[ \therefore \hat{f}(\omega) =
 
 \subsection{A Broader Perspective}
 
-Frequency division multiplexing is a method 
-% non-FFT implementations, their drawbacks, FFT implementations, their
+Frequency division multiplexing is a method of sending bandwidth limited 
+signals over a medium with a larger bandwidth. 
+% non-FFT implementations, their drawbacks, FFT implementations,their 
 % advantages, practical examples.
 
 \section{Extension of Principles}
