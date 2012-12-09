@@ -12,7 +12,9 @@ function demo(file1, file2)
         L1 = L2;
     end
     combined = [sample_1 sample_2];
-    out = split(stack(combined),2);
+    stacked = stack(combined);
+    wavwrite(stacked, 2*fs, strcat(file1, "-combined.wav"));
+    out = split(stacked, 2);
     wavwrite([out(:,1) out(:,1)], fs, strcat(file1, "-new.wav"));
     wavwrite([out(:,2) out(:,2)], fs, strcat(file2, "-new.wav"));
 endfunction
