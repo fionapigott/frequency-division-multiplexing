@@ -54,27 +54,30 @@ A signal \(f(t)\) is called \emph{band limited} if its Fourier transform is iden
 i.e., the signal is composed of a limited number of frequencies. Practically, most signals that are not completely random are band limited.
 
 If f(t) is band limited:
-\[f(t) = \inftyint \hat{f}(\omega)e^{i\omega t} \,d\omega \; = \; \int_{-\Omega}^{\Omega} \hat{f}(\omega)e^{i\omega t} \,d\omega\]
+\begin{equation}
+\label{eq:nft}
+f(t) = \inftyint \hat{f}(\omega)e^{i\omega t} \,d\omega \; = \; \int_{-\Omega}^{\Omega} \hat{f}(\omega)e^{i\omega t} \,d\omega
+\end{equation}
 
 Now, since \( \hat{f}(\omega) \) is defined on a finite, rather than an infinite, interval, \( \hat{f}(\omega) \) can be expressed as as a summation rather than an integral:
-\[\hat{f}(\omega) = \sum_{n = -\infty}^{\infty} c_{n}e^{\frac{i n \pi \omega}{\Omega}} \]
-Where the complex coefficients \( c_n\) are the Fourier transform of \( \hat{f}(\omega) \):
-\[ c_n = \frac{1}{2\Omega} \int_{-\Omega}^{\Omega} \hat{f}(\bar{\omega})e^{\frac{-i n \pi \bar{ \omega}}{\Omega}}\,d\bar{\omega}\]
+\[\hat{f}(\omega) = \sum_{n = -\infty}^{\infty} \hat{c}_{n}e^{\frac{i n \pi \omega}{\Omega}} \]
+Where the complex coefficients \( \hat{c}_n\) are the Fourier transform of \( \hat{f}(\omega) \):
+\[\hat{ c}_n = \frac{1}{2\Omega} \int_{-\Omega}^{\Omega} \hat{f}(\bar{\omega})e^{\frac{-i n \pi \bar{ \omega}}{\Omega}}\,d\bar{\omega}\]
 
-Looking at \(c_n\), and replacing \( \frac{-n\pi}{\Omega} = \bar{t}\) yield the definition of the Fourier transform of \( f(\bar{t})\):
-\[ c_n = \frac{1}{2\Omega} \int_{-\Omega}^{\Omega} \hat{f}(\bar{\omega})e^{i\bar{\omega}\bar{t}}\,d\bar{\omega} = \frac{1}{2\Omega} f(\bar{t}) = \frac{1}{2\Omega} f(\frac{-n\pi}{\Omega})\]
+Looking at \(\hat{c}_n\), and replacing \( \frac{-n\pi}{\Omega} = \bar{t}\) yield the definition of the Fourier transform of \( f(\bar{t})\):
+\[ \hat{c}_n = \frac{1}{2\Omega} \int_{-\Omega}^{\Omega} \hat{f}(\bar{\omega})e^{i\bar{\omega}\bar{t}}\,d\bar{\omega} = \frac{1}{2\Omega} f(\bar{t}) = \frac{1}{2\Omega} f(\frac{-n\pi}{\Omega})\]
 
 \begin{equation}
 \label{eq:nfhat}
-\therefore \; \hat{f}(\omega) = \sum_{n = -\infty}^{\infty} c_{n}e^{\frac{i n \pi \omega}{\Omega}} = \sum_{n = -\infty}^{\infty} \frac{1}{2\Omega} f(\frac{-n\pi}{\Omega})e^{\frac{i n \pi \omega}{\Omega}} = \frac{1}{2\Omega} \sum_{n = -\infty}^{\infty} f(\frac{n\pi}{\Omega})e^{-i \omega \frac{n \pi}{\Omega} } 
+\therefore \; \hat{f}(\omega) = \sum_{n = -\infty}^{\infty} \hat{c}_{n}e^{\frac{i n \pi \omega}{\Omega}} = \sum_{n = -\infty}^{\infty} \frac{1}{2\Omega} f(\frac{-n\pi}{\Omega})e^{\frac{i n \pi \omega}{\Omega}} = \frac{1}{2\Omega} \sum_{n = -\infty}^{\infty} f(\frac{n\pi}{\Omega})e^{-i \omega \frac{n \pi}{\Omega} } 
 \end{equation}
 
 Therefore, the Fourier transform can be completely determined by taking discrete samples of the function \( f(t) \) at only times t = \( \frac{n\pi}{\Omega}\). Because any function can always be recovered exactly from its Fourier transform, this implies that the band limited function \( f(t) \) can be completely determined by the same discrete set of samples.
 
-Use \eqref{eq:nfhat} to reconstruct \( f(t)  \):
+Use \eqref{eq:nft} and \eqref{eq:nfhat} to reconstruct \( f(t)  \):
 \begin{equation}
-\label{eq:nft}
-f(t) = \inftyint \frac{1}{2\Omega} \sum_{n = -\infty}^{\infty} f(\frac{n\pi}{\Omega})e^{-i \omega \frac{n \pi}{\Omega} } e^{i\omega t} \,d\omega = \frac{1}{2\Omega} \sum_{n = -\infty}^{\infty} f(\frac{n\pi}{\Omega}) \inftyint e^{-i \omega \frac{n \pi}{\Omega} } e^{i\omega t} \, d\omega
+\label{eq:ndtft}
+f(t) = \int_{-\Omega}^{\Omega} \frac{1}{2\Omega} \sum_{n = -\infty}^{\infty} f(\frac{n\pi}{\Omega})e^{-i \omega \frac{n \pi}{\Omega} } e^{i\omega t} \,d\omega = \frac{1}{2\Omega} \sum_{n = -\infty}^{\infty} f(\frac{n\pi}{\Omega}) \int_{-\Omega}^{\Omega} e^{-i \omega \frac{n \pi}{\Omega} } e^{i\omega t} \, d\omega
 \end{equation}
 
 And since the Fourier transform \( \hat{f}(\omega) \) is periodic with a period of \( 2\pi\), the sampling frequency \( n\) is given by:
@@ -105,12 +108,14 @@ In practice, many signals are only \emph{very nearly} band limited, meaning that
 
 \subsection{Discrete Fourier Transform}
 
-Given the Nyquist-Shannon Sampling Theorem, the Discrete Fourier transform follows readily.
+The Nyquist-Shannon Sampling Theorem demonstrates that and band limited signal can be expressed as a discrete time signal. Furthermore, any practical signal will be finite (rather than infinite) and by repeating the continuous finite signal infinitely, it can be made to be periodic and piecewise smooth.
 
-From equation \eqref{eq:nfhat} (the discrete time Fourier transform of \(f(t)\)):
-\[
-\hat{f}(\omega) = \frac{1}{2\Omega} \sum_{n = -\infty}^{\infty} f(\frac{n\pi}{\Omega})e^{-i \omega \frac{n \pi}{\Omega} } 
-\]
+From equation \eqref{eq:nfhat}, note that:
+\[\hat{f}(\omega)  = \frac{1}{2\Omega} \sum_{n = -\infty}^{\infty} f(\frac{n\pi}{\Omega})e^{-i \omega \frac{n \pi}{\Omega} } \]
+
+Now say that the signal that is being processed lasts for time N. In that case, it can be repeated infinitely to get a signal periodic in N. So one period of \(\hat{f}(\omega) \), call it \(\hat{f}_{k}(\omega) \) is given by:
+
+
 
 %I feel like I grasp this somewhat, but I can't develop it in a way that I'm satisfied with. 
 
