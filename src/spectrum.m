@@ -21,5 +21,5 @@ function [freqs, power] = spectrum(signal, fs)
 
     % The sampling theorem tells us that these frequencies will range from
     % 0 to half of the sampling frequency, so we compute those.
-    freqs = linspace(0, fs/2, NFFT/2);
+    freqs = linspace(0, fs/2, NFFT/2)';
 endfunction
