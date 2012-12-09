@@ -130,20 +130,19 @@ Thus, the result of the Nyquist-Shannon sampling theorem: any bandwidth limited
 function with the cutoff frequency \( \Omega \) in the time (or spacial) domain 
 can be reconstructed exactly from samples taken at a rate of \( 2\Omega \).
 
-% This was totally unnecessary to this proof (oops), but I'm going to hang on 
-to it for now.
-%\[  \hat{f}(\omega)  =\frac{1}{2\Omega}  \sum_{n = -\infty}^{\infty} 
-f(\frac{n\pi}{\Omega})e^{\frac{-i n \pi \omega}{\Omega}} \]
+% This was totally unnecessary to this proof (oops), but I'm going to hang on
+% to it for now.  \[  \hat{f}(\omega)  =\frac{1}{2\Omega}  \sum_{n =
+% -\infty}^{\infty} f(\frac{n\pi}{\Omega})e^{\frac{-i n \pi \omega}{\Omega}} \]
 %
-%Note that it is a property of the Fourier transform that:
-%\[ \mathcal{F}(g(Ct)) = \frac{1}{C} \; \hat{g}(\frac{\omega}{C}) \]
-%
-%Which is easily shown. Taking the Fourier Transform of \(g(Ct)\) yields:
-%\[ \mathcal{F}(g(Ct)) = \inftyint g(Ct)e^{-i\omega t} \,dt \]
-%Performing a simple u-substitution for \(Ct\), \(u = Ct\):
-%\[u = Ct  \Rightarrow du = Cdt \Rightarrow \frac{1}{C} \, du = dt \]
-%\[ \mathcal{F}(g(u)) = \frac{1}{C}  \inftyint g(u)e^{-i\frac{\omega}{C} u} 
-\,du = \frac{1}{C} \;  \hat{g}(\frac{\omega}{C}) \]
+% Note that it is a property of the Fourier transform that: \[
+% \mathcal{F}(g(Ct)) = \frac{1}{C} \; \hat{g}(\frac{\omega}{C}) \]
+% 
+% Which is easily shown. Taking the Fourier Transform of \(g(Ct)\) yields: \[
+% \mathcal{F}(g(Ct)) = \inftyint g(Ct)e^{-i\omega t} \,dt \] Performing a
+% simple u-substitution for \(Ct\), \(u = Ct\): \[u = Ct  \Rightarrow du = Cdt
+% \Rightarrow \frac{1}{C} \, du = dt \] \[ \mathcal{F}(g(u)) = \frac{1}{C}
+% \inftyint g(u)e^{-i\frac{\omega}{C} u} \,du = \frac{1}{C} \;
+% \hat{g}(\frac{\omega}{C}) \]
 
 
 \subsubsection{Implications}
@@ -217,49 +216,42 @@ long as \(f_s = 2\Omega\), the signal's DFT will be non-aliased representation
 of its continuous Fourier transform.
 
 %From equation \eqref{eq:nfhat}, note that:
-%\[\hat{f}(\omega)  = \frac{1}{2\Omega} \sum_{n = -\infty}^{\infty} 
-f(\frac{n\pi}{\Omega})e^{-i \omega \frac{n \pi}{\Omega} } \]
+% \[\hat{f}(\omega)  = \frac{1}{2\Omega} \sum_{n = -\infty}^{\infty} 
+% f(\frac{n\pi}{\Omega})e^{-i \omega \frac{n \pi}{\Omega} } \]
 %
-%Now say that the signal that is being processed lasts for time N. In that 
+% Now say that the signal that is being processed lasts for time N. In that 
 case, it can be repeated infinitely to get a signal periodic in N. So one 
 period of \(\hat{f}(\omega) \), call it \(\hat{f}_{k}(\omega) \) is given by:
 %
 
-%I feel like I grasp this somewhat, but I can't develop it in a way that I'm 
-satisfied with. 
+% I feel like I grasp this somewhat, but I can't develop it in a way that I'm 
+% satisfied with. 
 
 \subsubsection{Properties of the Discrete Fourier Transform}
 
-%reality condition and its implications
-%symmetries
+% reality condition and its implications
+% symmetries
 
 \subsection{Fast Fourier Transform}
 % I think we should mention the FFT, but not go into detail. It's a bit beyond 
-the scope of the project.
+% the scope of the project.
 
 \section{Frequency Division Multiplexing}
 
 \subsection{Overview}
 
-Frequency division multiplexing is a method 
-%non-FFT implementations, their drawbacks, FFT implementations, their 
-advantages, practical examples.
+% Frequency division multiplexing is a method non-FFT implementations, their
+% drawbacks, FFT implementations, their advantages, practical examples.
 
 \subsection{Our implementation}
 
-%modulating, combining, then separating out the signals.
+% modulating, combining, then separating out the signals.
 
 \section{Extension of Principles}
 
-%File compression by limiting bandwidth, image compression (same thing but in 
-spacial domain), modulating signals in general
+% File compression by limiting bandwidth, image compression (same thing but in
+% spacial domain), modulating signals in general
 
 \section{Conclusions}
 
 \end{document}
-
-
-
-
-
-
