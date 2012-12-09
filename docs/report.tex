@@ -32,22 +32,8 @@
 % Abstract
 \begin{abstract}
 
-Representing real signals, then transmitting them efficiently and accurately is 
-one of the most important processes of the information age. One important 
-method of representing a time- or space- dependent signal in a way that 
-inherently sorts out data in terms of its significance to the actual signal is 
-representing the signal in the frequency domain, then transmitting it that way. 
-A data set for a frequency domain signal can be cut down and insignificant data 
-removed by cutting off the data when the frequency becomes so high as to be 
-imperceptible to humans.
-This paper discusses the Discrete Fourier Transform and the algorithmically 
-advantageous version the Fast Fourier Transform and their use in transforming 
-discrete sampled signals into the frequency domain and processing those signals 
-(shifting frequency, limiting bandwidth etc). We discuss the mathematical and 
-practical significance of using the FFT in Frequency Division Multiplexing over 
-other, earlier techniques, and demonstrate digitally processing and 
-transmitting a sound signal, similar to how FDM is used to transmit telephone 
-conversations.
+Representing real signals, then transmitting them efficiently and accurately is one of the most important processes of the information age. One important method of representing a time- or space- dependent signal in a way that inherently sorts out data in terms of its significance to the actual signal is representing the signal in the frequency domain, then transmitting it that way. A data set for a frequency domain signal can be cut down and insignificant data removed by cutting off the data when the frequency becomes so high as to be imperceptible to humans.
+This paper discusses the Discrete Fourier Transform and the algorithmically advantageous version the Fast Fourier Transform and their use in transforming discrete sampled signals into the frequency domain and processing those signals (shifting frequency, limiting bandwidth etc). We discuss the mathematical and practical significance of using the FFT in Frequency Division Multiplexing over other, earlier techniques, and demonstrate digitally processing and transmitting a sound signal, similar to how FDM is used to transmit telephone conversations.
 
 \end{abstract}
 
@@ -57,83 +43,52 @@ conversations.
 
 \subsection{Nyquist-Shannon Sampling Theorem}
 
-One of the most important results in signal processing, the Nyquist-Shannon 
-Sampling Theorem (often simply the Nyquist Sampling Theorem) helps to develop 
-the Discrete Fourier Transform.
-% The result of this theorem is that for any 
+One of the most important results in signal processing, the Nyquist-Shannon Sampling Theorem (often simply the Nyquist Sampling Theorem) helps to develop the Discrete Fourier Transform. The result of this theorem is that and periodic signal can be represented by a specific, discrete set of points.
 
 \subsubsection{Proof}
 
-Say the \(f(t)\) is some infinite function in the time domain, but note that 
-this proof holds as well for a spacial \(f(x)\).
+Say the \(f(t)\) is some infinite function in the time domain, but note that this proof holds as well for a spacial \(f(x)\).
 
-A signal \(f(t)\) is called \emph{band limited} if its Fourier transform is 
-identically zero except in a finite interval.
-\[\hat{f}(\omega) = 0 \quad \forall \, \omega \; \text{where} \; |\omega| > 
-\Omega \text{ ``cutoff frequency"}\]
-i.e., the signal is composed of a limited number of frequencies. Practically, 
-most signals that are not completely random are band limited.
+A signal \(f(t)\) is called \emph{band limited} if its Fourier transform is identically zero except in a finite interval.
+\[\hat{f}(\omega) = 0 \quad \forall \, \omega \; \text{where} \; |\omega| > \Omega \text{ ``cutoff frequency"}\]
+i.e., the signal is composed of a limited number of frequencies. Practically, most signals that are not completely random are band limited.
 
 If \(f(t)\) is band limited:
 \begin{equation}
 \label{eq:nft}
-f(t) = \inftyint \hat{f}(\omega)e^{i\omega t} \,d\omega \; = \; 
-\int_{-\Omega}^{\Omega} \hat{f}(\omega)e^{i\omega t} \,d\omega
+f(t) = \inftyint \hat{f}(\omega)e^{i\omega t} \,d\omega \; = \; \int_{-\Omega}^{\Omega} \hat{f}(\omega)e^{i\omega t} \,d\omega
 \end{equation}
 
-Now, since \( \hat{f}(\omega) \) is defined on a finite, rather than an 
-infinite, interval, \( \hat{f}(\omega) \) can be expressed as as a summation 
-rather than an integral:
-\[\hat{f}(\omega) = \sum_{n = -\infty}^{\infty} \hat{c}_{n}e^{\frac{i n \pi 
-\omega}{\Omega}} \]
-Where the complex coefficients \( \hat{c}_n\) are the Fourier transform of \( 
-\hat{f}(\omega) \):
-\[\hat{ c}_n = \frac{1}{2\Omega} \int_{-\Omega}^{\Omega} 
-\hat{f}(\bar{\omega})e^{\frac{-i n \pi \bar{ \omega}}{\Omega}}\,d\bar{\omega}\]
+Now, since \( \hat{f}(\omega) \) is defined on a finite, rather than an infinite, interval, \( \hat{f}(\omega) \) can be expressed as as a summation rather than an integral:
+\[\hat{f}(\omega) = \sum_{n = -\infty}^{\infty} \hat{c}_{n}e^{\frac{i n \pi \omega}{\Omega}} \]
+Where the complex coefficients \( \hat{c}_n\) are the Fourier transform of \( \hat{f}(\omega) \):
+\[\hat{ c}_n = \frac{1}{2\Omega} \int_{-\Omega}^{\Omega} \hat{f}(\bar{\omega})e^{\frac{-i n \pi \bar{ \omega}}{\Omega}}\,d\bar{\omega}\]
 
-Looking at \(\hat{c}_n\), and replacing \( \frac{-n\pi}{\Omega} = \bar{t}\) 
-yield the definition of the Fourier transform of \( f(\bar{t})\):
-\[ \hat{c}_n = \frac{1}{2\Omega} \int_{-\Omega}^{\Omega} 
-\hat{f}(\bar{\omega})e^{i\bar{\omega}\bar{t}}\,d\bar{\omega} = 
-\frac{1}{2\Omega} f(\bar{t}) = \frac{1}{2\Omega} f(\frac{-n\pi}{\Omega})\]
+Looking at \(\hat{c}_n\), and replacing \( \frac{-n\pi}{\Omega} = \bar{t}\) yield the definition of the Fourier transform of \( f(\bar{t})\):
+\[ \hat{c}_n = \frac{1}{2\Omega} \int_{-\Omega}^{\Omega} \hat{f}(\bar{\omega})e^{i\bar{\omega}\bar{t}}\,d\bar{\omega} = \frac{1}{2\Omega} f(\bar{t}) = \frac{1}{2\Omega} f(\frac{-n\pi}{\Omega})\]
 
 \begin{equation}
 \label{eq:nfhat}
-\therefore \; \hat{f}(\omega) = \sum_{n = -\infty}^{\infty} 
-\hat{c}_{n}e^{\frac{i n \pi \omega}{\Omega}} = \sum_{n = -\infty}^{\infty} 
-\frac{1}{2\Omega} f(\frac{-n\pi}{\Omega})e^{\frac{i n \pi \omega}{\Omega}} = 
-\frac{1}{2\Omega} \sum_{n = -\infty}^{\infty} f(\frac{n\pi}{\Omega})e^{-i 
-\omega \frac{n \pi}{\Omega} } 
+\therefore \; \hat{f}(\omega) = \sum_{n = -\infty}^{\infty} \hat{c}_{n}e^{\frac{i n \pi \omega}{\Omega}} = \sum_{n = -\infty}^{\infty} \frac{1}{2\Omega} f(\frac{-n\pi}{\Omega})e^{\frac{i n \pi \omega}{\Omega}} = \frac{1}{2\Omega} \sum_{n = -\infty}^{\infty} f(\frac{n\pi}{\Omega})e^{-i \omega \frac{n \pi}{\Omega} } 
 \end{equation}
 
-Therefore, the Fourier transform can be completely determined by taking 
-discrete samples of the function \( f(t) \) at only times t = \( 
-\frac{n\pi}{\Omega}\). Because any function can always be recovered exactly 
-from its Fourier transform, this implies that the band limited function \( f(t) 
-\) can be completely determined by the same discrete set of samples.
+Therefore, the Fourier transform can be completely determined by taking discrete samples of the function \( f(t) \) at only times t = \( \frac{n\pi}{\Omega}\). Because any function can always be recovered exactly from its Fourier transform, this implies that the band limited function \( f(t) \) can be completely determined by the same discrete set of samples.
 
 Use \eqref{eq:nft} and \eqref{eq:nfhat} to reconstruct \( f(t)  \):
 \begin{equation}
 \label{eq:ndtft}
-f(t) = \int_{-\Omega}^{\Omega} \frac{1}{2\Omega} \sum_{n = -\infty}^{\infty} 
-f(\frac{n\pi}{\Omega})e^{-i \omega \frac{n \pi}{\Omega} } e^{i\omega t} 
-\,d\omega = \frac{1}{2\Omega} \sum_{n = -\infty}^{\infty} 
-f(\frac{n\pi}{\Omega}) \int_{-\Omega}^{\Omega} e^{-i \omega \frac{n 
-\pi}{\Omega} } e^{i\omega t} \, d\omega
+f(t) = \int_{-\Omega}^{\Omega} \frac{1}{2\Omega} \sum_{n = -\infty}^{\infty} f(\frac{n\pi}{\Omega})e^{-i \omega \frac{n \pi}{\Omega} } e^{i\omega t} \,d\omega = \frac{1}{2\Omega} \sum_{n = -\infty}^{\infty} f(\frac{n\pi}{\Omega}) \int_{-\Omega}^{\Omega} e^{-i \omega \frac{n \pi}{\Omega} } e^{i\omega t} \, d\omega
 \end{equation}
 
-And since the Fourier transform \( \hat{f}(\omega) \) is periodic with a period 
-of \( 2\pi\), the sampling frequency \( n\) is given by:
+And since the Fourier transform \( \hat{f}(\omega) \) is periodic with a period of \( 2\pi\), the sampling frequency \( n\) is given by:
 \[ \frac{n\pi}{\Omega} = 2\pi \Rightarrow n = 2\Omega\]
 
-Thus, the result of the Nyquist-Shannon sampling theorem: any bandwidth limited 
-function with the cutoff frequency \( \Omega \) in the time (or spacial) domain 
-can be reconstructed exactly from samples taken at a rate of \( 2\Omega \).
+Thus, the result of the Nyquist-Shannon sampling theorem: any bandwidth limited function with the cutoff frequency \( \Omega \) in the time (or spacial) domain can be reconstructed exactly from samples taken at a rate of \( 2\Omega \).
 
-% This was totally unnecessary to this proof (oops), but I'm going to hang on 
-to it for now.
-%\[  \hat{f}(\omega)  =\frac{1}{2\Omega}  \sum_{n = -\infty}^{\infty} 
-f(\frac{n\pi}{\Omega})e^{\frac{-i n \pi \omega}{\Omega}} \]
+This proof is an adaptation of the proof in \emph{Boundary Value Problems and Partial Differential Equations by David L Powers}
+
+% This was totally unnecessary to this proof (oops), but I'm going to hang on to it for now.
+%\[  \hat{f}(\omega)  =\frac{1}{2\Omega}  \sum_{n = -\infty}^{\infty} f(\frac{n\pi}{\Omega})e^{\frac{-i n \pi \omega}{\Omega}} \]
 %
 %Note that it is a property of the Fourier transform that:
 %\[ \mathcal{F}(g(Ct)) = \frac{1}{C} \; \hat{g}(\frac{\omega}{C}) \]
@@ -142,108 +97,74 @@ f(\frac{n\pi}{\Omega})e^{\frac{-i n \pi \omega}{\Omega}} \]
 %\[ \mathcal{F}(g(Ct)) = \inftyint g(Ct)e^{-i\omega t} \,dt \]
 %Performing a simple u-substitution for \(Ct\), \(u = Ct\):
 %\[u = Ct  \Rightarrow du = Cdt \Rightarrow \frac{1}{C} \, du = dt \]
-%\[ \mathcal{F}(g(u)) = \frac{1}{C}  \inftyint g(u)e^{-i\frac{\omega}{C} u} 
-\,du = \frac{1}{C} \;  \hat{g}(\frac{\omega}{C}) \]
+%\[ \mathcal{F}(g(u)) = \frac{1}{C}  \inftyint g(u)e^{-i\frac{\omega}{C} u} \,du = \frac{1}{C} \;  \hat{g}(\frac{\omega}{C}) \]
 
 
 \subsubsection{Implications}
 
-The Nyquist-Shannon sampling theorem is important because it demonstrates how 
-to use digital processing (which is necessarily discrete) to analyze signals. 
+The Nyquist-Shannon sampling theorem is important because it demonstrates how to use digital processing (which is necessarily discrete) to analyze signals. 
 
-In practice, many signals are only \emph{very nearly} band limited, meaning 
-that the vast majority of frequencies are under a certain \( \Omega \), but 
-some almost random noise causes some small frequency components \( \omega \) 
-with \( |\omega| > \Omega \). The signal might also be artificially band 
-limited because the sampling frequency \( f_s\) is determined by factors other 
-than the signal's band (such as limited storage), and so the frequencies \( 
-\omega \) in the signal are represented faithfully only for \(|\omega| < 
-\frac{f_s}{2} \). Because samples at \( f_s > 2\Omega \) only correspond to 
-unique periodic components with frequency \( < \frac{f_s}{2} \), samples from 
-components with frequency \( > \frac{f_s}{2} \) are aliased to a frequency 
-components with the same sample with frequency \( < \frac{f_s}{2} \). In both 
-cases, this aliasing results in noise and distortion of the sound; aliasing is 
-avoided only by understanding the frequency components of the time dependent 
-signal. When small sampling frequency cannot be avoided, the added noise from 
-aliasing can be eliminated by artificially bandwidth limiting the 
-signal--taking the Fourier transform and setting it equal to zero outside of 
-some band \( |\omega| > \frac{f_s}{2}  \). This way, information is lost, but 
-the remaining signal is clearer. 
+In practice, many signals are only \emph{very nearly} band limited, meaning that the vast majority of frequencies are under a certain \( \Omega \), but some almost random noise causes some small frequency components \( \omega \) with \( |\omega| > \Omega \). The signal might also be artificially band limited because the sampling frequency \( f_s\) is determined by factors other than the signal's band (such as limited storage), and so the frequencies \( \omega \) in the signal are represented faithfully only for \(|\omega| < \frac{f_s}{2} \). Because samples at \( f_s > 2\Omega \) only correspond to unique periodic components with frequency \( < \frac{f_s}{2} \), samples from components with frequency \( > \frac{f_s}{2} \) are aliased to a frequency components with the same sample with frequency \( < \frac{f_s}{2} \). In both cases, this aliasing results in noise and distortion of the sound; aliasing is avoided only by understanding the frequency components of the time dependent signal. When small sampling frequency cannot be avoided, the added noise from aliasing can be eliminated by artificially bandwidth limiting the signal--taking the Fourier transform and setting it equal to zero outside of some band \( |\omega| > \frac{f_s}{2}  \). This way, information is lost, but the remaining signal is clearer. 
 
-% I think some illustration of what aliasing means here (i.e. 2 sine waves with 
-the same sample) would be helpful. Remind me to look/ create one.
+% I think some illustration of what aliasing means here (i.e. 2 sine waves with the same sample) would be helpful. Remind me to look/ create one.
 
 \subsection{Discrete Fourier Transform}
 
-The Nyquist-Shannon Sampling Theorem demonstrates that any band limited signal 
-can be expressed as a discrete time signal. Furthermore, any practical signal 
-with only periodic components is periodic on some interval. Call that interval 
-\( T_0\). 
+The Fourier transform of a continuous signal gives a continuous signal. Above, the proof of the Nyquist-Shannon Sampling Theorem shows how a Fourier transform of a discrete signal can gives an exact, continuous signal. Finally, the discrete Fourier transform takes a discrete signal and maps that to a discrete transform, which, at a high enough sampling frequency, is a set of samples from the continuous transform.
 
-Say that for some sampling frequency \(f_s\), \(T_0 = N\frac{1}{f_{s}} \). 
-Therefore, one period \( T_0\) can be divided into N intervals with length \( 
-\frac{1}{f_{s}}\).
+\subsubsection{Formulation}
 
-We know that the signal \(f(t)\) can be represented as the infinite sum of its 
-frequency components, with coefficients \(c_n\).
+The Nyquist-Shannon Sampling Theorem demonstrates that any band limited signal can be expressed as a discrete time signal. Furthermore, any practical signal with only periodic components is periodic on some interval. Call that interval \( T_0\). 
+
+Say that for some sampling frequency \(f_s\), \(T_0 = N\frac{1}{f_{s}} \). Therefore, one period \( T_0\) can be divided into N intervals with length \( \frac{1}{f_{s}}\).
+
+We know that the signal \(f(t)\) can be represented as the infinite sum of its frequency components, with coefficients \(c_n\).
 
 \[ f(t) = \sum_{n = -\infty}^{\infty} \,c_n e^{i\omega t} \]
 \[ c_{n} = \frac{1}{T_0} \int_{0}^{T_0} f(t) e^{i\omega t} dt\]
 
-Because we defined \(T_0\) as the period of the function, \(c_{n}(\omega) \) 
-should have a period of \( T_0\), \(e^{i\omega T_0} = e^{i\omega nT_0}\). Since 
-\(e^{i x}\) has a period of \( 2\pi \), \( \omega \) must be equal to 
-\(\frac{2\pi n}{T_0} \). 
+Because we defined \(T_0\) as the period of the function, \(c_{n}(\omega) \) should have a period of \( T_0\), \(e^{i\omega T_0} = e^{i\omega nT_0}\). Since \(e^{i x}\) has a period of \( 2\pi \), \( \omega \) must be equal to \(\frac{2\pi n}{T_0} \). 
 
-\[ \therefore c_{n} = \frac{1}{T_0} \int_{0}^{T_0} f(t) e^{i \frac{2\pi}{T_0} t 
-} \; dt\] 
+\[ \therefore c_{n} = \frac{1}{T_0} \int_{0}^{T_0} f(t) e^{i \frac{2\pi}{T_0} t } \; dt\] 
 
-Now, using the Left-Hand Riemann sum to approximate \( c_n\) with \( N\) 
-intervals of \( \frac{1}{f_s} \):
-\[ c_{n} = \frac{1}{T_0} \frac{1}{f_s} \; \sum_{k = 0}^{N-1} f(k \frac{1}{f_s}) 
-e^{i \frac{2\pi n}{T_0} k\frac{1}{f_s}} \]
+Now, using the Left-Hand Riemann sum to approximate \( c_n\) with \( N\) intervals of \( \frac{1}{f_s} \):
+\[ c_{n} = \frac{1}{T_0} \frac{1}{f_s} \; \sum_{k = 0}^{N-1} f(k \frac{1}{f_s}) e^{i \frac{2\pi n}{T_0} k\frac{1}{f_s}} \]
 
 Which simplifies to:
-\[ c_{n} = \frac{1}{N} \; \sum_{k = 0}^{N-1} f(k \frac{1}{f_s}) e^{i \frac{2\pi 
-n}{N}k} \]
+\[ c_{n} = \frac{1}{N} \; \sum_{k = 0}^{N-1} f(k \frac{1}{f_s}) e^{i \frac{2\pi n}{N}k} \]
 
-Written where \( f(k \frac{1}{f_s}) =\) the indexed sample \(f_k\), spaced 
-\(\frac{1}{f_s}\) apart, this Riemann sum yields the common form of the 
-Discrete Fourier Transform (DFT):
-\[ c_{n} = \frac{1}{N} \; \sum_{k = 0}^{N-1} f_k e^{i \frac{2\pi n}{N}k} \]
+Written where \( f(k \frac{1}{f_s}) =\) the indexed sample \(f_k\), spaced \(\frac{1}{f_s}\) apart, this Riemann sum yields the common form of the Discrete Fourier Transform (DFT):
+\[ c_{n} = \frac{1}{N} \; \sum_{k = 0}^{N-1} f_k \, e^{i \frac{2\pi n}{N}k} \]
 
-And from the discussion of Nyquist sampling frequency above, we know that as 
-long as \(f_s = 2\Omega\), the signal's DFT will be non-aliased representation 
-of its continuous Fourier transform.
+And from the discussion of Nyquist sampling frequency above, we know that as long as \(f_s = 2\Omega\), the signal's DFT will be non-aliased representation of its continuous Fourier transform.
 
-%From equation \eqref{eq:nfhat}, note that:
-%\[\hat{f}(\omega)  = \frac{1}{2\Omega} \sum_{n = -\infty}^{\infty} 
-f(\frac{n\pi}{\Omega})e^{-i \omega \frac{n \pi}{\Omega} } \]
-%
-%Now say that the signal that is being processed lasts for time N. In that 
-case, it can be repeated infinitely to get a signal periodic in N. So one 
-period of \(\hat{f}(\omega) \), call it \(\hat{f}_{k}(\omega) \) is given by:
-%
-
-%I feel like I grasp this somewhat, but I can't develop it in a way that I'm 
-satisfied with. 
+This proof is founded on idea from Li Tan's book \emph{Digital Signal Processing} and \emph{Applied Partial Differential Equations} by Richard Haberman.
 
 \subsubsection{Properties of the Discrete Fourier Transform}
 
-%reality condition and its implications
-%symmetries
+A Fourier transform lends itself well to signal processing because it is relatively easy to analyze; a signal that seems random in the time domain tends to be organized in the frequency domain.There are two important properties of the discrete Fourier transform that are integral to the digital analysis of real signals: one, its periodicity, and two, the reality condition.
+
+As to the periodicity of the function, we enforced a period of \(T_0\) on the discrete Fourier transform in the formulation, and the sampling frequency, (which is controlled during implementation) \(f_s = \frac{N}{T_0}\). That way, when we sample a function (say, a voice) to analyze it, we know what the period of the transform and of resulting time domain signal should be, and can select only one period to analyze.
+
+The reality condition holds for all Fourier transforms, and the reality condition states that for all Fourier transforms of all real-valued functions:
+\[\hat{f}(\omega) = \overline{\hat{f}(-\omega)} \]
+
+Which can be easily demonstrated. 
+Recall Euler's identity: \(e^{ix} = cos(x) + i\,sin(x)\) and make note of the fact that \(cos(x)\) is even: \(cos(x) = cos(-x)\), and that \(sin(x)\) is odd: \(sin(-x) = -sin(x)\).
+Then the Fourier transform definition:
+\[ \hat{f}(\omega) = \inftyint f(t)e^{-i\omega t} \,dt = \inftyint f(t)(cos(\omega t) - i\,sin(\omega t)) \, dt = \inftyint f(t)cos(\omega t)\,dt \,- \,i\inftyint f(t)sin(\omega t) \, dt\]
+\[ \hat{f}(-\omega) = \inftyint f(t)e^{i\omega t} \,dt = \inftyint f(t)(cos(\omega t) + i\,sin(\omega t))\,  dt= \inftyint f(t)cos(\omega t)\,dt \,+ \,i\inftyint f(t)sin(\omega t) \, dt\]
+\[ \therefore \hat{f}(\omega) = \overline{\hat{f}(-\omega)} \]
 
 \subsection{Fast Fourier Transform}
-% I think we should mention the FFT, but not go into detail. It's a bit beyond 
-the scope of the project.
+% I think we should mention the FFT, but not go into detail. It's a bit beyond the scope of the project.
 
 \section{Frequency Division Multiplexing}
 
 \subsection{Overview}
 
 Frequency division multiplexing is a method 
-%non-FFT implementations, their drawbacks, FFT implementations, their 
-advantages, practical examples.
+%non-FFT implementations, their drawbacks, FFT implementations, their advantages, practical examples.
 
 \subsection{Our implementation}
 
@@ -251,8 +172,7 @@ advantages, practical examples.
 
 \section{Extension of Principles}
 
-%File compression by limiting bandwidth, image compression (same thing but in 
-spacial domain), modulating signals in general
+%File compression by limiting bandwidth, image compression (same thing but in spacial domain), modulating signals in general
 
 \section{Conclusions}
 
