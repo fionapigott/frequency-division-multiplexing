@@ -24,10 +24,12 @@ any idea how to implement what they are talking about.
 
 note for me: convolution in frequency domain = multiplication in time domain
 
-Implementation: Shifting center frequency = rotating the vector (v = a + ib)
-that you get from converting the signal to a set of complex vectors in the
-frequency domain.  Which maybe should have seemed obvious. Certainly wasn’t
-obvious to me.  Thanks stackoverflow.
+Implementation: Shifting center frequency = rotating the array of complex numbers
+you get from the FFT. We're not actually rotating the complex numbers themselves.
+The idea here is that you give the DFT a list of N samples "in time" and the DFT
+gives you back N complex samples "in frequency". So when you want to shift things
+in frequency, you sort of promote each sample to a higher frequency, by rotating
+the array.
 http://stackoverflow.com/questions/11794654/frequency-shift-using-fft-in-matlab
 
 "Real-Time Pitch Shifting on an FPGA" by some ECE seniors at Villanova

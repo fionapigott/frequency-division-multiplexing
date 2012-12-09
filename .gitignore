@@ -1,2 +1,6 @@
 *.wav
 *.swp
+docs/*.pdf
+docs/*.aux
+docs/*.log
+docs/*.synctex*
