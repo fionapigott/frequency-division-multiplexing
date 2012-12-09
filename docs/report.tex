@@ -144,9 +144,11 @@ This proof is founded on idea from Li Tan's book \emph{Digital Signal Processing
 
 A Fourier transform lends itself well to signal processing because it is relatively easy to analyze; a signal that seems random in the time domain tends to be organized in the frequency domain.There are two important properties of the discrete Fourier transform that are integral to the digital analysis of real signals: one, its periodicity, and two, the reality condition.
 
-As to the periodicity of the function, we enforced a period of \(T_0\) on the discrete Fourier transform in the formulation, and the sampling frequency, (which is controlled during implementation) \(f_s = \frac{N}{T_0}\). That way, when we sample a function (say, a voice) to analyze it, we know what the period of the transform and of resulting time domain signal should be, and can select only one period to analyze.
+As to the periodicity of the function, we enforced a period of \(T_0\) on the discrete Fourier transform in the formulation. This period results directly from the sampling frequency \(f_s\) with \(T_0 = \frac{N}{f_s}\) (which is controlled during implementation). That way, when we sample a function (say, a voice) to analyze it, we know what the period of the transform and of resulting time domain signal should be, and can select only one period to analyze.
 
-The reality condition holds for all Fourier transforms, and the reality condition states that for all Fourier transforms of all real-valued functions:
+An interesting way of showing the periodic properties of the discrete transform is to recognize the discrete transform as a special kinda of Dirac delta.
+
+The second property that we mape use of in manipulating signals, the reality condition, holds for all Fourier transforms, and the reality condition states that for all Fourier transforms of all real-valued functions:
 \[\hat{f}(\omega) = \overline{\hat{f}(-\omega)} \]
 
 Which can be easily demonstrated. 
@@ -161,14 +163,14 @@ Then the Fourier transform definition:
 
 \section{Frequency Division Multiplexing}
 
-\subsection{Overview}
-
-Frequency division multiplexing is a method 
-%non-FFT implementations, their drawbacks, FFT implementations, their advantages, practical examples.
-
 \subsection{Our implementation}
 
 %modulating, combining, then separating out the signals.
+
+\subsection{A Broader Perspective}
+
+Frequency division multiplexing is a method 
+%non-FFT implementations, their drawbacks, FFT implementations, their advantages, practical examples.
 
 \section{Extension of Principles}
 
