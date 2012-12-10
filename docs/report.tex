@@ -17,6 +17,8 @@
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{hyperref}
+\usepackage{wrapfig}
+\usepackage{sidecap}
 
 \newcommand{\inftyint}{\int_{-\infty}^{\infty}}
 
@@ -323,49 +325,67 @@ single-channel WAV files sampled at some frequency \(f_s\) and performs the
 necessary modulation to place them in adjacent band allocations, each \(f_s/2\)
 Hz wide.
 
+\begin{figure}[H]
+\hspace*{-.35 in}
+\begin{minipage}[t]{0.5\linewidth}
+\centering
+\includegraphics[trim = 10mm 5mm 10mm 5mm, width=1.2\linewidth]{sample1-orig.png}
+\caption{The first input sample in the time domain.}
+\label{fig:figure1}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[t]{0.5\linewidth}
+\centering
+\includegraphics[trim = 10mm 5mm 10mm 5mm, width=1.2\linewidth]{sample2-orig.png}
+\caption{The second input sample in the time domain.}
+\label{fig:figure2}
+\end{minipage}
+\end{figure}
+
 To accomplish this, we first take the Fourier transform of each signal. This
 gives us a complex-valued vector of the same length. Since the signal is real,
 the aforementioned reality condition holds and we can safely discard the
-negative frequencies without losing any information. At this point, there is
+negative frequencies without losing any information. 
+
+\begin{figure}[H]
+\hspace*{-.35 in}
+\begin{minipage}[t]{0.5\linewidth}
+\centering
+\includegraphics[trim = 10mm 5mm 10mm 5mm, width=1.2\linewidth]{spectrum1-orig.png}
+\caption{The first input sample in the frequency domain.}
+\label{fig:figure4}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[t]{0.5\linewidth}
+\centering
+\includegraphics[trim = 10mm 5mm 10mm 5mm, width=1.2\linewidth]{spectrum2-orig.png}
+\caption{The second input sample in the frequency domain.}
+\label{fig:figure4}
+\end{minipage}
+\end{figure}
+
+At this point, there is
 a simple way to combine the remaining frequencies: we simply concatenate them.
 By concatenating the signals, we move the translated signal into the higher 
 portion of the frequency band. This is called modulating the signal.
 
-\begin{figure}
-    \caption{The first input sample in time}
-    \centering
-        \includegraphics[width=0.7\textwidth]{sample1-orig.png}
+\begin{figure}[H]
+\hspace*{-.35 in}
+\begin{minipage}[t]{0.5\linewidth}
+\centering
+\includegraphics[trim = 10mm 5mm 10mm 5mm, width=1.2\linewidth]{spectrum-stacked.png}
+\caption{The modulated output in frequency}
+\label{fig:figure4}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[t]{0.5\linewidth}
+\centering
+\includegraphics[trim = 10mm 5mm 10mm 5mm, width=1.2\linewidth]{stacked.png}
+\caption{The modulated output in time}
+\label{fig:figure4}
+\end{minipage}
 \end{figure}
 
-\begin{figure}
-    \caption{The second input sample in time}
-    \centering
-        \includegraphics[width=0.7\textwidth]{sample2-orig.png}
-\end{figure}
-
-\begin{figure}
-    \caption{The first input sample in frequency}
-    \centering
-        \includegraphics[width=0.7\textwidth]{spectrum1-orig.png}
-\end{figure}
-
-\begin{figure}
-    \caption{The second input sample in frequency}
-    \centering
-        \includegraphics[width=0.7\textwidth]{spectrum2-orig.png}
-\end{figure}
-
-\begin{figure}
-    \caption{The modulated output in frequency}
-    \centering
-        \includegraphics[width=0.7\textwidth]{spectrum-stacked.png}
-\end{figure}
-
-\begin{figure}
-    \caption{The modulated output in time}
-    \centering
-        \includegraphics[width=0.7\textwidth]{stacked.png}
-\end{figure}
 Finally, to satisfy the reality condition, so that the inverse FFT of these
 new frequencies is real, we generate the negative frequencies by appending
 the reverse of the complex conjugate of the positive frequencies. Taking the
