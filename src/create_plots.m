@@ -14,18 +14,30 @@ function create_plots
     t2 = linspace(0, length(sample_2) / fs, length(sample_2))';
 
     plot(t1, sample_1);
+    title("Sample 1 in time domain");
+    xlabel("Time (seconds)");
+    ylabel("Relative displacement");
     print -dpng sample1-orig.png
 
     plot(t2, sample_2);
+    title("Sample 2 in time domain");
+    xlabel("Time (seconds)");
+    ylabel("Relative displacement");
     print -dpng sample2-orig.png
 
     [freqs_1, power_1] = spectrum(sample_1, fs);
     [freqs_2, power_2] = spectrum(sample_2, fs);
 
     area(freqs_1, power_1);
+    title("Sample 1 in frequency domain");
+    xlabel("Frequency (Hz)");
+    ylabel("Relative power");
     print -dpng spectrum1-orig.png;
 
     area(freqs_2, power_2);
+    title("Sample 2 in frequency domain");
+    xlabel("Frequency (Hz)");
+    ylabel("Relative power");
     print -dpng spectrum2-orig.png;
 
     % Now pad one of the signals so they're the same length
@@ -43,11 +55,17 @@ function create_plots
 
     [freqs_stacked, power_stacked] = spectrum(stacked, 2*fs);
     area(freqs_stacked, power_stacked);
+    title("Modulated output in frequency domain");
+    xlabel("Frequency (Hz)");
+    ylabel("Relative power");
     print -dpng spectrum-stacked.png;
 
     wavwrite(stacked, fs * 2, "stacked.wav");
     t_stacked = linspace(0, length(stacked) / (fs * 2), length(stacked));
     plot(t_stacked, stacked);
+    title("Modulated output in time domain");
+    xlabel("Time (seconds)");
+    ylabel("Relative displacement");
 
     s = split(stacked, 2);
     sample_1 = s(:,1);
@@ -57,9 +75,15 @@ function create_plots
     t2 = linspace(0, length(sample_2) / fs, length(sample_2))';
 
     plot(t1, sample_1);
+    title("Recovered sample 1 in time domain");
+    xlabel("Time (seconds)");
+    ylabel("Relative displacement");
     print -dpng sample1-new.png;
 
     plot(t2, sample_2);
+    title("Recovered sample 2 in time domain");
+    xlabel("Time (seconds)");
+    ylabel("Relative displacement");
     print -dpng sample2-new.png;
 
     wavwrite(sample_1, fs, "sample1-new.wav");
