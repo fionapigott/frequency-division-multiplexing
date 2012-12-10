@@ -333,11 +333,36 @@ replicate the negative frequencies as before, and use the inverse FFT to
 recover the input signals.
 
 \subsection{A Broader Perspective}
+Frequency division multiplexing (FDM) is a method of sectioning the large
+frequency band of a medium into non-overlapping frequency sub-bands, each of
+which contains a separate signal.
 
-Frequency division multiplexing is a method of sending bandwidth limited 
-signals over a medium with a larger bandwidth. 
-% non-FFT implementations, their drawbacks, FFT implementations,their 
-% advantages, practical examples.
+One could fathom a scheme for multiplexing in which the samples in time from
+each signal are sent one after another. In a certain sense, this sequencing
+is analogous to what is done in our implementation. The difference is that,
+instead of sequencing the signals in \emph{time}, we sequence them in
+\emph{frequency}. That is, instead of each occupying a separate portion of the
+time domain, each signal takes up a distinct portion of the frequency domain.
+The Fourier transform hence gives an excellent lens to describe processes on
+frequencies in terms of familiar problems in time and spacial domains.
+
+A good example of the FDM process is the telephone system. When a person talks
+on a telephone the audio signal is bandwidth limited and with multiple phones
+there are multiple audio signals with similar bandwidths. Now if a telephone
+wire were to send only one signal in each transmission then most of the
+medium’s bandwidth would be wasted. Instead FDM translates some of the signals
+(modulation) into different frequency sub-bands so that multiple signals can be
+sent in one transmission. When the transmission is received then the signals
+are inversely translated (demodulation) into their original forms and into
+frequencies used by humans.
+
+Similarly, the modern notion of a digital subscriber line uses existing
+telephone infrastructure to provide high-speed internet. This works by encoding
+digital data in higher frequency portions of the band, and using filters to
+keep voice and digital data separate. Radio transmissions could be seen as
+a usage of FDM: various agencies including the Federal Communications Commission
+and International Telecommunications Union set limits on bands for various
+uses, and operators transmit within a small portion of the frequency spectrum.
 
 \section{Extension of Principles}
 
