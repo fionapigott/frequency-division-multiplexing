@@ -16,6 +16,7 @@
 \usepackage{algorithmic}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{hyperref}
 
 \newcommand{\inftyint}{\int_{-\infty}^{\infty}}
 
@@ -330,6 +331,41 @@ a simple way to combine the remaining frequencies: we simply concatenate them.
 By concatenating the signals, we move the translated signal into the higher 
 portion of the frequency band. This is called modulating the signal.
 
+\begin{figure}
+    \caption{The first input sample in time}
+    \centering
+        \includegraphics[width=0.7\textwidth]{sample1-orig.png}
+\end{figure}
+
+\begin{figure}
+    \caption{The second input sample in time}
+    \centering
+        \includegraphics[width=0.7\textwidth]{sample2-orig.png}
+\end{figure}
+
+\begin{figure}
+    \caption{The first input sample in frequency}
+    \centering
+        \includegraphics[width=0.7\textwidth]{spectrum1-orig.png}
+\end{figure}
+
+\begin{figure}
+    \caption{The second input sample in frequency}
+    \centering
+        \includegraphics[width=0.7\textwidth]{spectrum2-orig.png}
+\end{figure}
+
+\begin{figure}
+    \caption{The modulated output in frequency}
+    \centering
+        \includegraphics[width=0.7\textwidth]{spectrum-stacked.png}
+\end{figure}
+
+\begin{figure}
+    \caption{The modulated output in time}
+    \centering
+        \includegraphics[width=0.7\textwidth]{stacked.png}
+\end{figure}
 Finally, to satisfy the reality condition, so that the inverse FFT of these
 new frequencies is real, we generate the negative frequencies by appending
 the reverse of the complex conjugate of the positive frequencies. Taking the
@@ -407,5 +443,35 @@ color and sharpness filters.
 
 
 \section{Conclusions}
+
+\section{Works Cited}
+``Aliasing." Wikipedia. Wikimedia Foundation, 12 Sept. 2012. Web. 09 Dec. 2012
+\vspace{0.3 cm} \noindent \hangindent = 0.6 cm \hangafter = 1 {Allen, Ronald
+L., and Duncan W. Mills. Signal Analysis: Time, Frequency, Scale, and
+Structure. Piscataway, NJ: IEEE, 2004. Print.}
+
+\vspace{0.3 cm} \noindent \hangindent = 0.6 cm \hangafter = 1 Haberman,
+Richard. Applied Partial Differential Equations: With Fourier Series and
+Boundary Value Problems. Upper Saddle River, NJ: Pearson Prentice Hall, 2004.
+Print.
+
+\vspace{0.3 cm} \noindent \hangindent = 0.6 cm \hangafter = 1 Powers, David L.
+Boundary Value Problems: And Partial Differential Equations. Amsterdam:
+Elsevier/Academic, 2010. Print.
+
+\vspace{0.3 cm} \noindent \hangindent = 0.6 cm \hangafter = 1 School of
+Phyiscs. "The Fourier Transform (What You Need to Know)." The University of
+Edinburgh, 10 Sept. 2007. Web. 9 Dec. 2012.
+\url{http://www2.ph.ed.ac.uk/~wjh/teaching/Fourier/documents/booklet.pdf}
+
+\vspace{0.3 cm} \noindent \hangindent = 0.6 cm \hangafter = 1 Tan, Li. Digital
+Signal Processing: Fundamentals and Applications. Amsterdam: Academic, 2008.
+Print.
+
+\vspace{0.3 cm} \noindent \hangindent = 0.6 cm \hangafter = 1 Weinstein, S.;
+Ebert, P.; , "Data Transmission by Frequency-Division Multiplexing Using the
+Discrete Fourier Transform," Communication Technology, IEEE Transactions on ,
+vol.19, no.5, pp.628-634, October 1971
+\url{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=1090705&isnumber=23757}
 
 \end{document}
