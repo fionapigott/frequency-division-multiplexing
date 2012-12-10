@@ -284,8 +284,18 @@ f(t)sin(\omega t) \, dt\] \[ \therefore \hat{f}(\omega) =
 \overline{\hat{f}(-\omega)} \]
 
 \subsection{Fast Fourier Transform}
-% I think we should mention the FFT, but not go into detail. It's a bit beyond
-% the scope of the project.
+As it is formulated, the discrete Fourier transform has a time complexity of
+\(O(n^2)\), because each of the \(n\) output samples requires a summation over
+all \(n\) input samples. This is similar to the problem of sorting: a na\"{i}ve
+solution requires making a computation using every element of the input, for
+each element of the input.
+
+Like the sorting problem, the DFT has considerably more efficient ``divide
+and conquer'' algorithms like the Cooley-Tukey algorithm, which reduce the
+time complexity to \(O(n \log{n})\) by recursively breaking the DFT into
+subproblems. The Cooley-Tukey FFT over \(N\) elements factors \(N\) to express
+the DFT as a combination of several DFTs on smaller inputs. This algorithmic
+speedup greatly enhances the feasibility of using the DFT on large data sets.
 
 \section{Frequency Division Multiplexing}
 
