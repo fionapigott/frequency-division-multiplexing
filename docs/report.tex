@@ -63,12 +63,12 @@ frequency greater than the largest frequency present in the signal.
 
 \subsubsection{Proof}
 
-Say the \(f(t)\) is some infinite function in the time domain, but note that
+Assume the function \(f(t)\) is some infinite function in the time domain, but note that
 this proof holds as well for a spacial \(f(x)\).
 
 A signal \(f(t)\) is called \emph{band limited} if its Fourier transform is
-identically zero except in a finite interval.  \[\hat{f}(\omega) = 0 \quad
-\forall \, \omega \; \text{where} \; |\omega| > \Omega \text{ ``cutoff
+identically zero except in a finite interval.  \[\hat{f}(\omega) \equiv 0 \quad
+\forall \, \omega \; \text{s.t.} \; |\omega| > \Omega \text{ ``cutoff
 frequency"}\] i.e., the signal is composed of a limited number of frequencies.
 Practically, most signals that are not completely random are band limited.
 
@@ -167,7 +167,7 @@ the remaining signal is clearer.
 
 The Fourier transform of a continuous signal gives a continuous signal. Above,
 the proof of the Nyquist-Shannon Sampling Theorem shows how a Fourier transform
-of a discrete signal can gives an exact, continuous signal. Finally, the
+of a discrete signal (a discrete time Fourier transfrom) can gives an exact, continuous signal. Finally, the
 discrete Fourier transform takes a discrete signal and maps that to a discrete
 transform, which, at a high enough sampling frequency, is a set of samples from
 the continuous transform.
@@ -241,7 +241,7 @@ is to recognize the discrete transform as a special kinda of Dirac delta.
 
 The Dirac delta is a \emph{sifting function} defined as the derivative of the 
 unit step function. By definition, a sifting function samples some other 
-function \( f(t \) at some arbitrary point \( \tau \). The the inner product 
+function \( f(t) \) at some arbitrary point \( \tau \). The the inner product 
 of the Dirac delta (defined below) and \( f(t)\) is equal to \( f(\tau) \):
 \[ \inftyint \delta(t - \tau)f(t) \, dt = f(\tau) \]
 With that property, with \(n\) Dirac deltas, \( f (t) \) would be sampled
