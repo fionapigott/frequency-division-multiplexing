@@ -43,8 +43,8 @@ because there are many efficient algorithms (called fast Fourier transforms, or
 FFTs) to implement it on conventional hardware, the DFT has become an
 invaluable tool for analysing and manipulating the frequency information in
 digital signals. In this paper, we will investigate Frequency-Division
-Multiplexing, one such application which focuses on sending several signals
-concurrently in time through a fixed-bandwidth channel, by translating each of
+Multiplexing, one application which focuses on sending several signals
+concurrently in time through a fixed-bandwidth channel by translating each of
 the constituent frequencies into its own allocation within the channel. In the
 process, we will investigate the relationship between the DFT, the DTFT
 (discrete-time Fourier transform), and the Fourier transform on an infinite
@@ -68,7 +68,7 @@ source: \url{http://xkcd.com/26/}
 
 One of the most important results in signal processing, the Nyquist-Shannon
 Sampling Theorem (often simply the Nyquist Sampling Theorem) helps to develop
-the Discrete Fourier Transform. The result of this theorem is that any periodic
+the discrete Fourier Transform. The result of this theorem is that any periodic
 signal can be represented by a discretly sampled set of points, with samping 
 frequency greater than the largest frequency present in the signal. 
 
@@ -191,10 +191,10 @@ function.}
 
 The Fourier transform of a continuous signal gives a continuous signal. Above,
 the proof of the Nyquist-Shannon Sampling Theorem shows how a Fourier transform
-of a discrete signal (a discrete time Fourier transfrom) can gives an exact, continuous signal. Finally, the
-discrete Fourier transform takes a discrete signal and maps that to a discrete
-transform, which, at a high enough sampling frequency, is a set of samples from
-the continuous transform.
+of a discrete signal (a discrete time Fourier transform) can give an exact,
+continuous signal. Finally, the discrete Fourier transform takes a discrete
+signal and maps that to a discrete transform, which, at a high enough sampling
+frequency, is a set of samples from the continuous transform.
 
 \subsubsection{Formulation}
 
@@ -249,7 +249,7 @@ provides a radically different way to view the signal while preserving all of
 its information. Many signals which are difficult to analyse in the time domain
 can be transformed into the frequency domain where they become regular. There
 are two important properties of the discrete Fourier transform that are
-integral to the digital analysis of real signals: its periodicity and the
+integral to the digital analysis of real signals: its periodicity and its
 \emph{reality condition}.
 
 \subsubsection*{Periodicity}
@@ -261,7 +261,7 @@ voice) to analyse it, we know what the period of the transform and of resulting
 time domain signal should be, and can select only one period to analyse.
 
 An interesting way of showing the periodic properties of the discrete transform
-is to recognize the discrete transform as a special kinda of Dirac delta. 
+is to recognize the discrete transform as a special kind of Dirac delta. 
 
 The Dirac delta is a \emph{sifting function} defined as the derivative of the 
 unit step function. By definition, a sifting function samples some other 
@@ -273,9 +273,9 @@ With that property, with \(n\) Dirac deltas, \( f (t) \) would be sampled
 \[ \inftyint \delta(t - n\tau)f(t) \, dt = f(n\tau) \]
 Notice that computing the discrete Fourier transform of a continuous 
 signal is exactly that--taking \( n = \frac{1}{f_s} \) Dirac deltas, computing 
-thier inner products to sample a function \( f(t) \) \(n\) times, then
+their inner products to sample a function \( f(t) \) \(n\) times, then
 taking the transform of those samples. For \( |n| \to \infty \), the 
-combination of all of these Dirac deltas is called and infinite Dirac comb, 
+combination of all of these Dirac deltas is called an infinite Dirac comb, 
 and the transform of those samples is the transform of the Dirac comb over some
 interval. 
 
@@ -285,21 +285,21 @@ use in our analysis: the frequency of samples that make up the comb,
 Another way of stating that property is that for some spacing \( \tau\) 
 between sample points in the time domain, the spacing in the frequency 
 domain is \( \frac{1}{\tau} \). A proof and examples of this can be found in 
-the Allen and Mills, as well as the Edinburgh physics depertment references.
+the Allen and Mills, as well as the Edinburgh physics department references.
 
-The periodicity of function and transform stated above, which we rely to analyze 
+The periodicity of function and transform stated above, on which we rely to analyze 
 signals in our implementation of Frequency Division Multiplexing,
 results directly from the above property of the Dirac comb.
 
 \subsubsection*{Reality Condition}
-The second property that we mape use of in manipulating signals, the reality
-condition, holds for all Fourier transforms, and the reality condition states
+The second property that we make use of in manipulating signals, the reality
+condition, holds for all Fourier transforms, and states
 that for all Fourier transforms of all real-valued functions: \[\hat{f}(\omega)
 = \overline{\hat{f}(-\omega)} \]
 
 Which can be easily demonstrated.  Recall Euler's identity: \(e^{ix} = \cos(x) +
 i\,\sin(x)\) and make note of the fact that \(\cos(x)\) is even: \(\cos(x) =
-\cos(-x)\), and that \(\sin(x)\) is odd: \(\sin(-x) = -\sin(x)\).  Then the Fourier
+\cos(-x)\), and that \(\sin(x)\) is odd: \(\sin(-x) = -\sin(x)\).  Then we invoke the Fourier
 transform definition: \[ \hat{f}(\omega) = \inftyint f(t)e^{-i\omega t} \,dt =
 \inftyint f(t)(\cos(\omega t) - i\,\sin(\omega t)) \, dt = \inftyint
 f(t)\cos(\omega t)\,dt \,- \,i\inftyint f(t)\sin(\omega t) \, dt\] \[
@@ -406,7 +406,7 @@ portion of the frequency band. This is called modulating the signal.
 \end{minipage}
 \end{figure}
 
-Finally, to satisfy the reality condition, so that the inverse FFT of these
+Finally, to satisfy the reality condition so that the inverse FFT of these
 new frequencies is real, we generate the negative frequencies by appending
 the reverse of the complex conjugate of the positive frequencies. Taking the
 inverse FFT, we now have a periodic signal with all of the frequency
@@ -437,7 +437,7 @@ The Fourier transform gives an excellent lens to describe processes on
 frequencies in terms of familiar problems in time and spacial domains.
 
 A good example of the FDM process is the telephone system. When a person talks
-on a telephone the audio signal is bandwidth limited and with multiple phones
+on a telephone, the audio signal is bandwidth limited and with multiple phones
 there are multiple audio signals with similar bandwidths. If a telephone
 wire were to send only one signal in each transmission then most of the
 medium’s bandwidth would be wasted. Instead FDM translates some of the signals
@@ -463,9 +463,9 @@ indeed, the unique interplay between time/ spacial domains and the frequency
 domain forms the basis for the mathematics behind hundreds of software, engineering,
 and science applications.
 
-The idea that most audio or visual signals are bandwidth limited (or, at least,
-human perception is bandwidth limited) becomes file compression and efficient
-transmission. 
+The fact that most audio or visual signals are bandwidth limited (or, at least,
+human perception is bandwidth limited) allows for various forms of compression
+in which less perceptible data is filtered out.
 
 Recent experimentation with signal tranmission, including using 
 different wavelength lasers to send multiple signals over one fiber optic cable,
