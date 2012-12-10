@@ -65,7 +65,7 @@ frequency greater than the largest frequency present in the signal.
 
 The following proof of the Sampling Theorem is an adaptation of Shannon's original
 proof, found in \emph{Boundary Value Problems and Partial Differential 
-Equations by David L Powers}.
+Equations} by David L Powers.
 
 Assume the function \(f(t)\) is some infinite function in the time domain, but note that
 this proof holds as well for a spacial \(f(x)\).
@@ -98,7 +98,8 @@ yield the definition of the Fourier transform of \( f(\bar{t})\): \[ \hat{c}_n
     -\infty}^{\infty} \hat{c}_{n}e^{\frac{i n \pi \omega}{\Omega}} = \sum_{n =
     -\infty}^{\infty} \frac{1}{2\Omega} f(\frac{-n\pi}{\Omega})e^{\frac{i n \pi
     \omega}{\Omega}} = \frac{1}{2\Omega} \sum_{n = -\infty}^{\infty}
-    f(\frac{n\pi}{\Omega})e^{-i \omega \frac{n \pi}{\Omega} } \end{equation}
+    f(\frac{n\pi}{\Omega})e^{-i \omega \frac{n \pi}{\Omega} } 
+\end{equation}
 
 Therefore, the Fourier transform can be completely determined by taking
 discrete samples of the function \( f(t) \) at only times t = \(
@@ -160,6 +161,17 @@ aliasing can be eliminated by artificially bandwidth limiting the
 signal--taking the Fourier transform and setting it equal to zero outside of
 some band \( |\omega| > \frac{f_s}{2}  \). This way, information is lost, but
 the remaining signal is clearer. 
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[width=.5\linewidth]{AliasingSines.png}
+\caption{A graph showing the effects of aliasing. If the red sine function 
+has a frequency \( > \frac{f_s}{2}\), its samples can be mapped to a function
+(the blue curve) with a frequency \( < \frac{f_s}{2}\). The blue sine 
+function is \emph{aliased} to the \( f_s\) frequency samples of the red sine
+function.}
+\end{centering}
+\end{figure}
 
 % I think some illustration of what aliasing means here (i.e. 2 sine waves with
 % the same sample) would be helpful. Remind me to look/ create one.
@@ -314,7 +326,8 @@ gives us a complex-valued vector of the same length. Since the signal is real,
 the aforementioned reality condition holds and we can safely discard the
 negative frequencies without losing any information. At this point, there is
 a simple way to combine the remaining frequencies: we simply concatenate them.
-This puts the translated signal into the higher portion of the band.
+By concatenating the signals, we move the translated signal into the higher 
+portion of the frequency band. This is called modulating the signal.
 
 Finally, to satisfy the reality condition, so that the inverse FFT of these
 new frequencies is real, we generate the negative frequencies by appending
