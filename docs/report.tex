@@ -50,8 +50,13 @@ process, we will investigate the relationship between the DFT, the DTFT
 (discrete-time Fourier transform), and the Fourier transform on an infinite
 continuous domain.
 
-
 \end{abstract}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=.5\linewidth]{fourier.jpg}
+\end{center}
+\end{figure}
 
 \clearpage
 
@@ -315,7 +320,17 @@ subproblems. The Cooley-Tukey FFT over \(N\) elements factors \(N\) to express
 the DFT as a combination of several DFTs on smaller inputs. This algorithmic
 speedup greatly enhances the feasibility of using the DFT on large data sets.
 
+\clearpage
+
 \section{Frequency Division Multiplexing}
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[width=\linewidth]{FDMimage.png}
+\caption{An illustration of the concept of FDM}
+\end{centering}
+\end{figure}
+
 
 \subsection{Our Implementation}
 To simulate transmitting multiple signals over a channel of a fixed bandwidth,
@@ -342,6 +357,8 @@ Hz wide.
 \end{minipage}
 \end{figure}
 
+\clearpage
+
 To accomplish this, we first take the Fourier transform of each signal. This
 gives us a complex-valued vector of the same length. Since the signal is real,
 the aforementioned reality condition holds and we can safely discard the
@@ -363,6 +380,7 @@ negative frequencies without losing any information.
 \label{fig:figure4}
 \end{minipage}
 \end{figure}
+
 
 At this point, there is
 a simple way to combine the remaining frequencies: we simply concatenate them.
@@ -461,10 +479,9 @@ those signals gives us synthesizers and auto-tuners; selecting for and
 changing only certain frequencies in image manipulation software gives us 
 color and sharpness filters.
 
+\clearpage 
 
-\section{Conclusions}
-
-\section{Works Cited}
+\section*{Works Cited}
 ``Aliasing." Wikipedia. Wikimedia Foundation, 12 Sept. 2012. Web. 09 Dec. 2012
 \vspace{0.3 cm} \noindent \hangindent = 0.6 cm \hangafter = 1 {Allen, Ronald
 L., and Duncan W. Mills. Signal Analysis: Time, Frequency, Scale, and
