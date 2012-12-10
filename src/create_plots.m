@@ -50,15 +50,23 @@ function create_plots
         sample_1 = [sample_1; zeros(L2 - L1, 1)];
         L1 = L2;
     end
+
     combined = [sample_1 sample_2];
     stacked = stack(combined);
 
-    [freqs_stacked, power_stacked] = spectrum(stacked, 2*fs);
+    [freqs_stacked, power_stacked] = spectrum(stacked, 2 * fs);
     area(freqs_stacked, power_stacked);
     title("Modulated output in frequency domain");
     xlabel("Frequency (Hz)");
     ylabel("Relative power");
     print -dpng spectrum-stacked.png;
+
+    t = linspace(0, length(stacked) / (2 * fs), length(stacked));
+    plot(t, stacked);
+    title("Modulated output in time domain");
+    xlabel("Time (seconds)");
+    ylabel("Relative displacement");
+    print -dpng stacked.png
 
     wavwrite(stacked, fs * 2, "stacked.wav");
     t_stacked = linspace(0, length(stacked) / (fs * 2), length(stacked));

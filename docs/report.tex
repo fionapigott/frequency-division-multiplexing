@@ -315,6 +315,47 @@ negative frequencies without losing any information. At this point, there is
 a simple way to combine the remaining frequencies: we simply concatenate them.
 This puts the translated signal into the higher portion of the band.
 
+\begin{figure}
+    \caption{The first input sample in time}
+    \centering
+        \includegraphics[width=0.7\textwidth]{sample1-orig.png}
+\end{figure}
+
+\begin{figure}
+    \caption{The second input sample in time}
+    \centering
+        \includegraphics[width=0.7\textwidth]{sample2-orig.png}
+\end{figure}
+
+\begin{figure}
+    \caption{The first input sample in frequency}
+    \centering
+        \includegraphics[width=0.7\textwidth]{spectrum1-orig.png}
+\end{figure}
+
+\begin{figure}
+    \caption{The second input sample in frequency}
+    \centering
+        \includegraphics[width=0.7\textwidth]{spectrum2-orig.png}
+\end{figure}
+
+\begin{figure}
+    \caption{The modulated output in frequency}
+    \centering
+        \includegraphics[width=0.7\textwidth]{spectrum-stacked.png}
+\end{figure}
+
+\begin{figure}
+    \caption{The modulated output in frequency}
+    \centering
+        \includegraphics[width=0.7\textwidth]{spectrum-stacked.png}
+\end{figure}
+
+\begin{figure}
+    \caption{The modulated output in time}
+    \centering
+        \includegraphics[width=0.7\textwidth]{stacked.png}
+\end{figure}
 Finally, to satisfy the reality condition, so that the inverse FFT of these
 new frequencies is real, we generate the negative frequencies by appending
 the reverse of the complex conjugate of the positive frequencies. Taking the
