@@ -284,14 +284,51 @@ f(t)sin(\omega t) \, dt\] \[ \therefore \hat{f}(\omega) =
 \overline{\hat{f}(-\omega)} \]
 
 \subsection{Fast Fourier Transform}
-% I think we should mention the FFT, but not go into detail. It's a bit beyond
-% the scope of the project.
+As it is formulated, the discrete Fourier transform has a time complexity of
+\(O(n^2)\), because each of the \(n\) output samples requires a summation over
+all \(n\) input samples. This is similar to the problem of sorting: a na\"{i}ve
+solution requires making a computation using every element of the input, for
+each element of the input.
+
+Like the sorting problem, the DFT has considerably more efficient ``divide
+and conquer'' algorithms like the Cooley-Tukey algorithm, which reduce the
+time complexity to \(O(n \log{n})\) by recursively breaking the DFT into
+subproblems. The Cooley-Tukey FFT over \(N\) elements factors \(N\) to express
+the DFT as a combination of several DFTs on smaller inputs. This algorithmic
+speedup greatly enhances the feasibility of using the DFT on large data sets.
 
 \section{Frequency Division Multiplexing}
 
-\subsection{Our implementation}
+\subsection{Our Implementation}
+To simulate transmitting multiple signals over a channel of a fixed bandwidth,
+we created a simulation using GNU Octave (a free and open source
+MATLAB\textsuperscript{\textregistered} clone) which reads in two
+single-channel WAV files sampled at some frequency \(f_s\) and performs the
+necessary modulation to place them in adjacent band allocations, each \(f_s/2\)
+Hz wide.
 
-% modulating, combining, then separating out the signals.
+To accomplish this, we first take the Fourier transform of each signal. This
+gives us a complex-valued vector of the same length. Since the signal is real,
+the aforementioned reality condition holds and we can safely discard the
+negative frequencies without losing any information. At this point, there is
+a simple way to combine the remaining frequencies: we simply concatenate them.
+This puts the translated signal into the higher portion of the band.
+
+Finally, to satisfy the reality condition, so that the inverse FFT of these
+new frequencies is real, we generate the negative frequencies by appending
+the reverse of the complex conjugate of the positive frequencies. Taking the
+inverse FFT, we now have a periodic signal with all of the frequency
+information of each input signal, and which is twice as long. Hence it must
+be sent at twice the input sampling frequency in order to maintain the same
+time scale. This is equivalent to saying that it must be sent over a channel
+which is wide enough to accommodate both signals, by the Nyquist theorem.
+
+To demodulate these signals, the Octave code takes the FFT of the modulated
+signal. At this point, it is simply a process of stripping away the redundant
+frequency information and splitting the frequency vector in half to reveal
+the information contained in each of the individual signals. We then
+replicate the negative frequencies as before, and use the inverse FFT to
+recover the input signals.
 
 \subsection{A Broader Perspective}
 
