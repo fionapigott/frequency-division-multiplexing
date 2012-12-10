@@ -357,27 +357,28 @@ is analogous to what is done in our implementation. The difference is that,
 instead of sequencing the signals in \emph{time}, we sequence them in
 \emph{frequency}. That is, instead of each occupying a separate portion of the
 time domain, each signal takes up a distinct portion of the frequency domain.
-The Fourier transform hence gives an excellent lens to describe processes on
+The Fourier transform gives an excellent lens to describe processes on
 frequencies in terms of familiar problems in time and spacial domains.
 
 A good example of the FDM process is the telephone system. When a person talks
 on a telephone the audio signal is bandwidth limited and with multiple phones
-there are multiple audio signals with similar bandwidths. Now if a telephone
+there are multiple audio signals with similar bandwidths. If a telephone
 wire were to send only one signal in each transmission then most of the
 medium’s bandwidth would be wasted. Instead FDM translates some of the signals
 (modulation) into different frequency sub-bands so that multiple signals can be
 sent in one transmission. When the transmission is received then the signals
-are inversely translated (demodulation) into their original forms and into
+are inversely translated (demodulation) into their original forms and audio
 frequencies used by humans.
 
 Similarly, the modern notion of a digital subscriber line uses existing
 telephone infrastructure to provide high-speed internet. This works by encoding
 digital data in higher frequency portions of the band, and using filters to
-keep voice and digital data separate. Radio transmissions could be seen as
+keep voice and digital data separate. Radio transmissions is
 a usage of FDM: various agencies including the Federal Communications Commission
 and International Telecommunications Union set limits on bands for various
-uses, and operators transmit within a small portion of the frequency spectrum.
+channels, and operators transmit within a small portion of the frequency spectrum.
 
+\clearpage
 \section{Extension of Principles}
 
 The same properties of real signals and Fourier analysis that make Frequency 
@@ -403,6 +404,7 @@ Converting audio signals into the frequency domain and then frequency-shifing
 those signals gives us synthesizers and auto-tuners; selecting for and 
 changing only certain frequencies in image manipulation software gives us 
 color and sharpness filters.
+
 
 \section{Conclusions}
 
