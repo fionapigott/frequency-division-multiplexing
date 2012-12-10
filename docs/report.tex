@@ -63,6 +63,10 @@ frequency greater than the largest frequency present in the signal.
 
 \subsubsection{Proof}
 
+The following proof of the Sampling Theorem is an adaptation of Shannon's original
+proof, found in \emph{Boundary Value Problems and Partial Differential 
+Equations by David L Powers}.
+
 Assume the function \(f(t)\) is some infinite function in the time domain, but note that
 this proof holds as well for a spacial \(f(x)\).
 
@@ -118,9 +122,6 @@ Thus, the result of the Nyquist-Shannon sampling theorem: any bandwidth limited
 function with the cutoff frequency \( \Omega \) in the time (or spacial) domain
 can be reconstructed exactly from samples taken at a rate of \( 2\Omega \).
 
-This proof is an adaptation of the proof in \emph{Boundary Value Problems and
-Partial Differential Equations by David L Powers}
-
 % This was totally unnecessary to this proof (oops), but I'm going to hang on
 % to it for now.  \[  \hat{f}(\omega)  =\frac{1}{2\Omega}  \sum_{n =
 % -\infty}^{\infty} f(\frac{n\pi}{\Omega})e^{\frac{-i n \pi \omega}{\Omega}} \]
@@ -138,7 +139,7 @@ Partial Differential Equations by David L Powers}
 
 \subsubsection{Implications}
 
-The Nyquist-Shannon sampling theorem is important because it demonstrates how
+The Nyquist-Shannon Sampling Theorem is important because it demonstrates how
 to use digital processing (which is necessarily discrete) to analyse signals. 
 
 In practice, many signals are only \emph{very nearly} band limited, meaning
@@ -263,8 +264,9 @@ between sample points in the time domain, the spacing in the frequency
 domain is \( \frac{1}{\tau} \). A proof and examples of this can be found in 
 the Allen and Mills, as well as the Edinburgh physics depertment references.
 
-The periodicity of function and transform stated above, which we rely on in 
-our analysis results directly from the above property of the Dirac comb.
+The periodicity of function and transform stated above, which we rely to analyze 
+signals in our implementation of Frequency Division Multiplexing,
+results directly from the above property of the Dirac comb.
 
 \subsubsection*{Reality Condition}
 The second property that we mape use of in manipulating signals, the reality
@@ -339,8 +341,29 @@ signals over a medium with a larger bandwidth.
 
 \section{Extension of Principles}
 
-% File compression by limiting bandwidth, image compression (same thing but in
-% spacial domain), modulating signals in general
+The same properties of real signals and Fourier analysis that make Frequency 
+Division Multiplexing feasible lend themselves to other real-world application;
+indeed, the unique interplay between time/ spacial domains and the frequency
+domain forms the basis for the mathematics behind hundreds of software, engineering,
+and science applications.
+
+The idea that most audio or visual signals are bandwidth limited (or, at least,
+human perception is bandwidth limited) becomes file compression and efficient
+transmission. 
+
+Recent experimentation with signal tranmission, including using 
+different wavelength lasers to send multiple signals over one fiber optic cable,
+makes use of fast digital modulation and demodulaton of signals using the FFT.
+
+Analysing light signals in the frequency domain has long helped to identify 
+chemicals in spectroscopy. Now, converting sounds and images into the frequency 
+domain helps researchers to identify materials, chemicals, distinct voices, and 
+detect edges.
+
+Converting audio signals into the frequency domain and then frequency-shifing 
+those signals gives us synthesizers and auto-tuners; selecting for and 
+changing only certain frequencies in image manipulation software gives us 
+color and sharpness filters.
 
 \section{Conclusions}
 
